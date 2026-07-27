@@ -288,4 +288,6 @@ odd  = [x for x in nums if x % 2 == 1]     # [1, 3, 5]
 scores = [70, 95, 88, 92, 78]
 max_score = max(scores)               # 95
 max_idx = scores.index(max_score)     # 1
-添加测试内容
+# 添加测试内容
+# 添加测试内容2
+
