@@ -10,8 +10,9 @@
 ├── day1/                   # Day 1：List 全家桶
 │   ├── Day1_List练习.py    # 练习题（已做完）
 │   └── List速查手册.py     # List 知识点速查
-├── Day2_Tuple知识点.py     # Day 2：Tuple 元组与可变不可变（待学习）
-└── Day2_Tuple练习.py       # Day 2 练习题（待做）
+└── day2/                   # Day 2：Tuple 元组与可变不可变
+    ├── Day2_Tuple知识点.py  # 知识点（已学习）
+    └── Day2_Tuple练习.py    # 练习题（待做）
 Python常见报错速查.md       # Python 常见报错及解决方法
 ```
 
