@@ -5,7 +5,7 @@
 ## 项目结构
 
 ```
-Python摸底测试/
+示其的逆袭计划/
 ├── assessment.py           # 基础摸底测试（10 题，未完成）
 ├── day1/                   # Day 1：List 全家桶
 │   ├── Day1_List练习.py    # 练习题（已做完）
