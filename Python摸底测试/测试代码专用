@@ -1,6 +1,60 @@
-a = [1, 2, 3]
-b = a
+# a = [1, 2, 3]
+# b = a
 
-print(id(a))          # 比如 23847293847
-print(id(b))          # 一模一样 23847293847
-print(a is b)
+# print(id(a))          # 比如 23847293847
+# print(id(b))          # 一模一样 23847293847
+# print(a is b)
+# todo = ["起床", "打游戏", "吃饭", "打游戏", "睡觉"]
+# print("练习 1 初始：", todo)
+
+# # 请在此处编写代码
+# todo.append("写作业")
+# todo.insert(1,"复习")
+# todo.remove("打游戏")
+# todo1 = todo.pop(-1)
+# todo.index("吃饭")
+# print(todo.index("吃饭"))
+# nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# nums[:3]
+# nums[8:]
+# nums[1:4]
+# nums[::2]
+# nums[::-1]
+# print(nums1,nums2,nums3,nums4,nums5)
+# original = [9, 3, 7, 1, 5, 8, 2, 6, 4]
+# sorted_copy = sorted(original)  # 用 sorted()
+# # 请在此处编写代码
+
+# original.sort()      # 用 sort()
+# # 在上面补充
+
+# print("sorted 后的新列表：", sorted_copy)
+# print("原列表 sort 后：", original)
+# print([x**2 for x in range(1,21) if x % 2 == 0])
+# # print([x for x in range(100,1000) if str(x) == str(x)[::-1]])\
+# s = "hello world python"
+# print([w.upper() for w in s.split()])
+# scores = [95, 87, 92, 78, 88]
+# for i, v in enumerate(scores):
+#     print(f"第{i+1}名：{v}分")
+# matrix = [
+#     [1, 2, 3],
+#     [4, 5, 6],
+#     [7, 8, 9]
+# ]
+# # 请在此处编写代码
+# matrix[2][2]
+# matrix[0]
+# [row[1] for row in matrix]
+# print(sum([num for row in matrix for num in row]))
+players = [
+    ("Alice", 3200),
+    ("Bob",   4800),
+    ("Charlie", 2100),
+    ("Diana",  5500),
+    ("Eve",    3900)
+
+]
+# 请在此处编写代码
+s = sorted(players, key=lambda x: x[1], reverse=True)
+print(s[1:4])
