@@ -14,10 +14,11 @@ Day 2 · Tuple 与可变不可变 练习
 #   4. 不需要括号、直接写出来的元组 t4，包含 "a", "b", "c"
 # ============================================================
 def problem1():
-    t1 = None  # 请修改
-    t2 = None  # 请修改
-    t3 = None  # 请修改
-    t4 = None  # 请修改
+  
+    t1 = (1,2,3)  # 请修改
+    t2 = (99,)  # 请修改
+    t3 = tuple([10,20,30,40])  # 请修改
+    t4 = "a","b","c"  # 请修改
     return t1, t2, t3, t4
 
 
@@ -32,11 +33,11 @@ def problem1():
 # ============================================================
 def problem2():
     t = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-    a = None  # 请修改
-    b = None  # 请修改
-    c = None  # 请修改
-    d = None  # 请修改
-    e = None  # 请修改
+    a = t[3]  # 请修改
+    b = t[-2]  # 请修改
+    c = t[:5]  # 请修改
+    d = t[::-1]  # 请修改
+    e = 5 in t  # 请修改
     return a, b, c, d, e
 
 
@@ -48,12 +49,13 @@ def problem2():
 def problem3():
     student = ("张三", 18, "重庆")
     # 请在此处编写代码：解包 student
-    name = None    # 请修改
-    age = None     # 请修改
-    city = None    # 请修改
+    name = student[0]   # 请修改
+    age = student[1]     # 请修改
+    city = student[2]    # 请修改
 
     x, y = 10, 20
     # 请在此处编写代码：交换 x 和 y
+    x,y = y,x
 
     return name, age, city, x, y
 
@@ -68,10 +70,12 @@ def problem3():
 def problem4():
     # 列表操作
     a = [1, 2, 3]
+    a.append(4)
     # 请在此处编写代码：对 a 添加 4
 
     # 元组操作
     b = (1, 2, 3)
+    new_tuple = (1,2,3,4)
     # 请在此处编写代码：创建新元组 (1, 2, 3, 4)
 
     return a, new_tuple
@@ -95,8 +99,8 @@ def problem4():
 # ============================================================
 def problem5():
     # 你的预测（写注释里就行，不用改这个函数）
-    # 列表结果 a 应该是：__________
-    # 元组结果 x 应该是：__________
+    # 列表结果 a 应该是：[1,2,3,4]
+    # 元组结果 x 应该是：(1,2,3)
     pass
 
 
@@ -111,8 +115,12 @@ def analyze_scores(scores):
     示例：
     analyze_scores([70, 55, 90, 45, 88]) -> (90, 45, 69.6, 2)
     """
-    # 请在此处编写代码
-    pass
+    max_score = max(scores)
+    min_score = min(scores)
+    avg_score = sum(scores) / len(scores)
+    fail_count = len([num for num in scores if num < 60])
+    return (max_score, min_score, round(avg_score, 1), fail_count)
+    
 
 
 # ============================================================
@@ -131,8 +139,9 @@ def distance(p1, p2):
     distance((1, 1), (4, 5)) -> 5.0
     """
     # 请在此处编写代码
-    pass
-
+    x1,y1 = p1
+    x2,y2 = p2
+    return round(((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5,2)
 
 # ============================================================
 # 练习 8 · 列表 vs 元组：成绩处理（10 分）
@@ -145,12 +154,13 @@ class_names = ("高一班", "高二班", "高三班")  # 班级名称不会变�
 def add_score(score_list, new_score):
     """添加一个新成绩到成绩列表，返回新列表"""
     # 请在此处编写代码
-    pass
+    score_list.append(new_score)
+    return score_list
 
 def student_count(names):
     """返回元组 names 中有多少个学生"""
     # 请在此处编写代码
-    pass
+    return len(names)
 
 
 # ============================================================
