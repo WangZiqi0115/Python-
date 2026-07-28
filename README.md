@@ -6,13 +6,14 @@
 
 ```
 示其的逆袭计划/
-├── assessment.py           # 基础摸底测试（10 题，未完成）
 ├── day1/                   # Day 1：List 全家桶
 │   ├── Day1_List练习.py    # 练习题（已做完）
-│   └── List速查手册.py     # List 知识点速查
+│   ├── List速查手册.py     # List 知识点速查
+│   └── 测试代码专用         # 草稿
 └── day2/                   # Day 2：Tuple 元组与可变不可变
     ├── Day2_Tuple知识点.py  # 知识点（已学习）
-    └── Day2_Tuple练习.py    # 练习题（待做）
+    ├── Day2_Tuple练习.py    # 练习题（待做）
+    └── 代码测试专用.py      # 写代码测试想法
 Python常见报错速查.md       # Python 常见报错及解决方法
 ```
 
