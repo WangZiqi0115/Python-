@@ -7,9 +7,9 @@
 ```
 示其的逆袭计划/
 └── Python学习/
-    ├── day1/               # Day 1：List 全家桶
-    ├── day2/               # Day 2：Tuple 元组
-    ├── day3/               # Day 3：Dict 字典
+    ├── day1 (2026.7.27)/   # Day 1：List 全家桶
+    ├── day2 (2026.7.28)/   # Day 2：Tuple 元组
+    ├── day3 (2026.7.29)/   # Day 3：Dict 字典
     ├── Python30天计划.md
     ├── Python常见报错速查.md
     └── Python学习日志.md
