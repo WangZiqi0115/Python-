@@ -13,9 +13,9 @@ Day 3 · Dict 字典 练习
 #   3. 用 dict() 创建 d3：name="张三", score=95
 # ============================================================
 def problem1():
-    d1 = None  # 请修改
-    d2 = None  # 请修改
-    d3 = None  # 请修改
+    d1 = {"name":"示其","age":18,"major":"数学"}  # 请修改
+    d2 = {}  # 请修改
+    d3 = dict(name="张三", score=95)  # 请修改
     return d1, d2, d3
 
 
@@ -26,9 +26,9 @@ def problem1():
 # ============================================================
 def problem2():
     student = {"name": "示其", "age": 18, "score": 92}
-    a = None  # 请修改：用方括号取 age
-    b = None  # 请修改：用 get 取 age
-    c = None  # 请修改：用 get 取 "height"，默认值 0
+    a = student["age"] 
+    b = student.get("age")  # 请修改：用 get 取 age
+    c = student.get("height",0)  # 请修改：用 get 取 "height"，默认值 0
     return a, b, c
 
 
@@ -44,7 +44,11 @@ def problem2():
 def problem3():
     d = {"a": 1, "b": 2}
     # 请在此处编写代码
-    
+    d["c"] = 3
+    d["b"] = 99
+    del d["a"]
+    d["d"] = 4
+    d.update({"e": 5, "f": 6})
     return d   # 应该返回 {"b": 99, "c": 3, "d": 4, "e": 5, "f": 6}
 
 
@@ -60,8 +64,12 @@ def problem4():
     total = 0
     count = 0
     # 请在此处编写代码：遍历并打印
-    
-    avg = None  # 请修改：计算平均分
+    for name,score in scores.items():
+        print(f"姓名：{name}，分数：{score}")
+        total = score + total
+        count += 1
+   
+    avg = round(total / count , 2)  # 请修改：计算平均分
     return avg   # 返回平均分
 
 
@@ -75,10 +83,14 @@ def problem5():
     text = "Hello world hello Python world hello"
     freq = {}
     # 请在此处编写代码
+    for word in text.split():
+        word = word.lower()
+        freq[word] = freq.get(word,0) + 1
+
     
     return freq  # 应返回 {"hello": 3, "world": 2, "python": 1}
 
-
+ 
 # ============================================================
 # 练习 6 · 字典推导式（10 分）
 # 题目：给定一个列表 nums，用字典推导式生成一个字典
@@ -89,7 +101,7 @@ def problem6():
     nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     # 请在此处编写代码（一行字典推导式）
     
-    return None  # 请修改
+    return {key : key ** 3 for key in nums if key % 2 == 0}  # 请修改
 
 
 # ============================================================
@@ -102,7 +114,7 @@ def problem7():
     d = {"a": 1, "b": 2, "c": 3}
     # 请在此处编写代码
     
-    return None  # 请修改，应返回 {1: "a", 2: "b", 3: "c"}
+    return {v:k for k,v in d.items()}  # 请修改，应返回 {1: "a", 2: "b", 3: "c"}
 
 
 # ============================================================
@@ -122,12 +134,14 @@ students = {
 def add_student(students, sid, name):
     """添加学生，返回新字典"""
     # 请在此处编写代码
-    pass
+    students[sid] = name
+    return students
 
 def get_name(students, sid):
     """根据学号查姓名，不存在返回"未知" """
+
     # 请在此处编写代码
-    pass
+    return students.get(sid,"未知")
 
 
 # ============================================================
