@@ -14,10 +14,10 @@ Day 4 · Set 集合 练习 (2026.7.30)
 #   4. 从字符串 "banana" 创建集合 s4
 # ============================================================
 def problem1():
-    s1 = None  # 请修改
-    s2 = None  # 请修改
-    s3 = None  # 请修改
-    s4 = None  # 请修改
+    s1 = {1,2,3,4,5}  # 请修改
+    s2 = set()  # 请修改
+    s3 = set([1, 2, 2, 3, 3, 4])  # 请修改
+    s4 = set("banana")  # 请修改
     return s1, s2, s3, s4
 
 
@@ -33,6 +33,11 @@ def problem1():
 def problem2():
     s = {1, 2, 3}
     # 请在此处编写代码
+    s.add(4)
+    s.remove(2)
+    s.discard(99)
+    s.add(5)
+
     
     return s  # 应返回 {1, 3, 4, 5}
 
@@ -45,10 +50,10 @@ def problem3():
     a = {1, 2, 3, 4, 5}
     b = {4, 5, 6, 7, 8}
     
-    union = None       # 请修改：并集
-    intersection = None  # 请修改：交集
-    difference = None  # 请修改：差集 (a - b)
-    sym_diff = None    # 请修改：对称差集
+    union = a | b           # 请修改：并集
+    intersection = a & b    # 请修改：交集
+    difference = a - b      # 请修改：差集 (a - b)
+    sym_diff = a ^ b        # 请修改：对称差集
     
     return union, intersection, difference, sym_diff
 
@@ -62,10 +67,11 @@ def problem4():
     a = {1, 2, 3, 4, 5}
     c = {2, 3}
     d = {6, 7}
+    b = {1,20}
     
-    is_subset = None      # 请修改：c 是否是 a 的子集
-    has_intersection = None  # 请修改：a 和 b 是否有交集（提示：& 或 isdisjoint）
-    is_disjoint = None     # 请修改：a 和 d 是否不相交
+    is_subset = c.issubset(a)      # 请修改：c 是否是 a 的子集
+    has_intersection =  not a.isdisjoint(b)  # 请修改：a 和 b 是否有交集（提示：& 或 isdisjoint）
+    is_disjoint = a.isdisjoint(d)     # 请修改：a 和 d 是否不相交
     
     return is_subset, has_intersection, is_disjoint
 
@@ -78,8 +84,8 @@ def problem4():
 def problem5():
     items = [3, 1, 2, 1, 3, 4, 2, 5, 1]
     
-    result_set = None      # 请修改：用 set 去重
-    result_ordered = None  # 请修改：用 dict.fromkeys 去重并保留顺序
+    result_set = set(items)      # 请修改：用 set 去重
+    result_ordered = list(dict.fromkeys(items))  # 请修改：用 dict.fromkeys 去重并保留顺序
     
     return result_set, result_ordered
 
@@ -94,8 +100,8 @@ def problem6():
     list_a = [1, 2, 3, 4, 5, 6, 7, 8]
     list_b = [5, 6, 7, 8, 9, 10]
     
-    squares = None  # 请修改：奇数平方的集合
-    common = None   # 请修改：list_a 和 list_b 的公共元素集合
+    squares = set(num ** 2 for num in range(1,21) if num % 2 == 1)  # 请修改：奇数平方的集合
+    common = set(list_a) & set(list_b)   # 请修改：list_a 和 list_b 的公共元素集合
     
     return squares, common
 
@@ -112,10 +118,10 @@ def problem7():
     class_a = {"张三", "李四", "王五", "赵六"}
     class_b = {"王五", "赵六", "陈七", "周八"}
     
-    both = None     # 请修改：两个班都有的
-    only_a = None   # 请修改：只在 A 班的
-    only_b = None   # 请修改：只在 B 班的
-    all_students = None  # 请修改：所有不重复的学生
+    both = class_a & class_b     # 请修改：两个班都有的
+    only_a = class_a - class_b   # 请修改：只在 A 班的
+    only_b = class_b - class_a   # 请修改：只在 B 班的
+    all_students = class_a | class_b  # 请修改：所有不重复的学生
     
     return both, only_a, only_b, all_students
 
@@ -131,10 +137,10 @@ def problem7():
 def problem8():
     votes = ["张三", "李四", "张三", "王五", "李四", "张三", "赵六", "李四", "张三"]
     
-    unique_count = None  # 请修改：不同的候选人数
-    vote_count = {}      # 请修改：统计每个人得了多少票
+    unique_count = len(set(votes))  # 请修改：不同的候选人数
+    vote_count = {"张三":votes.count("张三"),"李四":votes.count("李四"),"王五":votes.count("王五"),"赵六":votes.count("赵六")}      # 请修改：统计每个人得了多少票
     
-    winner = None        # 请修改：得票最多的人
+    winner = max(vote_count,key = vote_count.get)        # 请修改：得票最多的人
     
     return unique_count, vote_count, winner
 
