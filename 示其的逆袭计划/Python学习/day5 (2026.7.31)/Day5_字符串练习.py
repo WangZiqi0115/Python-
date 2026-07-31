@@ -22,7 +22,7 @@ def problem1():
 # ============================================================
 def problem2():
     user_input = "  Zhang San   \n"
-    cleaned = None  # 请修改：strip + lower
+    cleaned = user_input.strip().lower()  # 请修改：strip + lower
     return cleaned
 
 
@@ -35,7 +35,7 @@ def problem3():
     filename = "report_2024.csv"
     suffix = ".csv"
     
-    pos = None   # 请修改：用 find 查找 suffix 的位置
+    pos = filename.find(suffix)   # 请修改：用 find 查找 suffix 的位置
     
     if pos != -1:
         result = f"找到，位置在 {pos}"
@@ -51,7 +51,7 @@ def problem3():
 # ============================================================
 def problem4():
     line = "张三,95,重庆,数学学院\n"
-    parts = None  # 请修改：strip + split
+    parts = line.strip().split(",")  # 请修改：strip + split
     return parts  # 应返回 ["张三", "95", "重庆", "数学学院"]
 
 
@@ -62,7 +62,7 @@ def problem4():
 # ============================================================
 def problem5():
     text = "  this is a bad day, not a bad day  "
-    result = None  # 请修改：strip + replace
+    result = text.strip().replace("bad","good")  # 请修改：strip + replace
     return result
 
 
@@ -73,7 +73,7 @@ def problem5():
 # ============================================================
 def problem6():
     text = "Python is a powerful programming language"
-    word_count = None  # 请修改
+    word_count = len(text.split())  # 请修改
     return word_count
 
 
@@ -91,7 +91,7 @@ def problem7():
     ]
     result = []
     for name, score, level in data:
-        line = None  # 请修改：f-string 格式化
+        line = f"{name:<10},{score:>8},{level:^8}"  # 请修改：f-string 格式化
         result.append(line)
     return result
     # 预期：
@@ -111,8 +111,8 @@ def problem8():
     parts = log_line.split()
     # 请在此处编写代码
     
-    ip = None    # 请修改：取 IP（第一个元素）
-    method = None  # 请修改：取请求方式（第6个元素），去掉前面的 "
+    ip = parts[0]    # 请修改：取 IP（第一个元素）
+    method = parts[4].strip('"')  # 取请求方式，去掉前面的引号
     
     return ip, method
 
