@@ -14,10 +14,10 @@ Day 6 · 四大容器综合串讲 练习 (2026.8.1)
 #   4. 用户 ID 列表（要去重）→ 用什么容器？
 # ============================================================
 def problem1():
-    week = None          # 请修改：一周七天（用中文，如"周一"~"周日"）
-    cart = None          # 请修改：购物车，初始有 "牛奶", "面包"
-    student_map = None   # 请修改：{"001": "张三", "002": "李四"}
-    user_ids = None      # 请修改：从 [101, 102, 101, 103, 102] 去重
+    week = ("周一","周二","周三","周四","周五","周六","周日")          # 请修改：一周七天（用中文，如"周一"~"周日"）
+    cart = ["牛奶","面包"]          # 请修改：购物车，初始有 "牛奶", "面包"
+    student_map = {"001": "张三", "002": "李四"}   # 请修改：{"001": "张三", "002": "李四"}
+    user_ids = set([101, 102, 101, 103, 102])      # 请修改：从 [101, 102, 101, 103, 102] 去重
     return week, cart, student_map, user_ids
 
 
@@ -35,10 +35,10 @@ def problem2():
     d = {"a": 1, "b": 2}
     pairs = [("x", 1), ("y", 2)]
     
-    result1 = None  # 请修改：元组转列表
-    result2 = None  # 请修改：列表转集合
-    result3 = None  # 请修改：字典 key 转列表
-    result4 = None  # 请修改：列表转字典
+    result1 = list(t)  # 请修改：元组转列表
+    result2 = set(lst)     # 请修改：列表转集合
+    result3 = list(d.keys())  # 请修改：字典 key 转列表
+    result4 = dict(pairs)  # 请修改：列表转字典
     
     return result1, result2, result3, result4
 
@@ -53,9 +53,9 @@ def problem2():
 def problem3():
     text = "apple banana apple orange banana apple"
     
-    freq = None       # 请修改：{"apple": 3, "banana": 2, "orange": 1}
-    unique = None     # 请修改：{"apple", "banana", "orange"}
-    words = None      # 请修改：["apple", "banana", "apple", "orange", "banana", "apple"]
+    freq = {"apple": text.count("apple"), "banana": text.count("banana"), "orange": text.count("orange")}       # 请修改：{"apple": 3, "banana": 2, "orange": 1}
+    unique = set(text.split())     # 请修改：{"apple", "banana", "orange"}
+    words = text.split()     # 请修改：["apple", "banana", "apple", "orange", "banana", "apple"]
     
     return freq, unique, words
 
@@ -71,9 +71,9 @@ def problem4():
     class_a = {"张三", "李四", "王五"}
     class_b = {"王五", "赵六", "孙七"}
     
-    common = None    # 请修改：两个班都有的
-    only_a = None    # 请修改：只在 A 班的
-    all_stu = None   # 请修改：所有学生
+    common = class_a & class_b    # 请修改：两个班都有的
+    only_a = class_a - (class_a & class_b)    # 请修改：只在 A 班的
+    all_stu = class_a |class_b   # 请修改：所有学生
     
     return common, only_a, all_stu
 
@@ -92,9 +92,12 @@ def problem5():
         "003": {"name": "王五", "scores": [88, 76, 95]},
     }
     
-    totals = {}    # 请修改：学号 → 总分
-    top_student = None  # 请修改：总分最高的学号
-    ranking = None      # 请修改：按总分从高到低的学号列表
+    totals = {"001":sum(students["001"]["scores"]),
+              "002":sum(students["002"]["scores"]),
+              "003":sum(students["003"]["scores"])
+    }    # 请修改：学号 → 总分
+    top_student = max(students,key = totals.get)  # 请修改：总分最高的学号
+    ranking = sorted(students, key = totals.get,reverse=True)      # 请修改：按总分从高到低的学号列表
     
     return totals, top_student, ranking
 
@@ -115,7 +118,7 @@ def problem6():
     in_list = 3 in lst           # 请修改：3 是否在列表中
     key_exists = "age" in d      # 请修改："age" 是否是字典的 key
     in_set = 25 in s             # 请修改：25 是否在集合中
-    safe_get = None              # 请修改：用 get 取 "city"，默认值 "未知"
+    safe_get = d.get("city","未知")              # 请修改：用 get 取 "city"，默认值 "未知"
     
     return in_list, key_exists, in_set, safe_get
 
@@ -130,10 +133,10 @@ def problem7():
     scores = {"张三": 95, "李四": 82, "王五": 65, "赵六": 45, "陈七": 90}
     
     groups = {
-        "优秀": [],
-        "良好": [],
-        "及格": [],
-        "不及格": []
+        "优秀": [name for name,score in scores.items() if score >= 90],
+        "良好": [name for name,score in scores.items() if score >= 80 and score < 90],
+        "及格": [name for name,score in scores.items() if score >= 60 and score < 80],
+        "不及格": [name for name,score in scores.items() if score <= 60 ]
     }
     # 请在此处编写代码
     
@@ -148,15 +151,21 @@ def problem7():
 #   1. add_contact(contacts, name, phone, city): 添加联系人，返回新字典
 #   2. search(contacts, name): 查找联系人，返回 (phone, city)，不存在返回 None
 # ============================================================
+dct1 = {}
 def add_contact(contacts, name, phone, city):
     """添加联系人，返回新字典"""
     # 请在此处编写代码
-    pass
+    contacts[name] = {"phone": phone,"city" : city,}
+    return contacts
 
 def search(contacts, name):
     """查找联系人，返回 (phone, city)，不存在返回 None"""
     # 请在此处编写代码
-    pass
+    info = contacts.get(name)
+    if info:
+        return(info["phone"],info["city"])
+    return None
+    
 
 
 # ============================================================
