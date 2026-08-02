@@ -11,7 +11,7 @@ Day 8 · 函数专题 练习 (2026.8.2)
 # ============================================================
 def add(a, b):
     # 请在此处编写代码
-    pass
+    return a + b
 
 
 # ============================================================
@@ -19,7 +19,7 @@ def add(a, b):
 # 题目：下面的函数想返回 "HELLO"，但有一个 bug，请修复
 # ============================================================
 def shout(text):
-    return text.upper   # ❌ 这里有个 bug，请修复
+    return text.upper()   # ❌ 这里有个 bug，请修复
 
 
 # ============================================================
@@ -31,11 +31,16 @@ def shout(text):
 # ============================================================
 def add_item(lst, item):
     # 请在此处编写代码
-    pass
+    lst.append(item)
+    return lst
 
 def count_occurrences(text, char):
     # 请在此处编写代码
-    pass
+    count = 0
+    for word in text:
+        if word == char:
+            count += 1
+    return count
 
 
 # ============================================================
@@ -47,12 +52,12 @@ def count_occurrences(text, char):
 # def change():
 #     x = 20
 #     return x
-# print(change())     # 输出：______
-# print(x)            # 输出：______
+# print(change())     # 输出：20
+# print(x)            # 输出: 10
 # ============================================================
 def problem4():
-    # change() 输出：__________
-    # x 输出：__________
+    # change() 输出：20
+    # x 输出：10
     pass
 
 
@@ -65,8 +70,10 @@ def add_task(task, task_list=[]):   # ❌ 默认列表会共享
     return task_list
 
 def add_task_fixed(task, task_list=None):
-    # 请在此处编写代码：修复默认参数陷阱
-    pass
+    if task_list == None:
+        task_list = []
+    task_list.append(task)
+    return task_list
 
 
 # ============================================================
@@ -79,8 +86,8 @@ def problem6():
     students = [("张三", 95), ("李四", 82), ("王五", 90)]
     words = ["python", "java", "c", "kotlin"]
     
-    by_score = None   # 请修改：按分数从高到低，用 lambda
-    by_length = None  # 请修改：按长度排序，用 len
+    by_score = sorted(students,key = lambda x: x[1],reverse=True)   # 请修改：按分数从高到低，用 lambda
+    by_length = sorted(words,key=len)  # 请修改：按长度排序，用 len
     
     return by_score, by_length
 
@@ -97,7 +104,15 @@ def analyze_scores(scores):
     analyze_scores([70, 55, 90, 45, 88]) -> (90, 45, 69.6, 60.0)
     """
     # 请在此处编写代码
-    pass
+    max_score = max(scores)
+    min_score = min(scores)
+    jun_score = round(sum(scores) / len(scores),1)
+    count = 0
+    for score in scores:
+        if score >= 60:
+            count += 1
+    percent = round(count / len(scores),1)
+    return (max_score, min_score, jun_score, percent)
 
 
 # ============================================================
@@ -112,17 +127,26 @@ def analyze_scores(scores):
 def add_student(students, sid, name, score):
     """添加学生，返回修改后的字典"""
     # 请在此处编写代码
-    pass
+    students[sid] = {"name":name,"score":score}
+    return students
 
 def get_student(students, sid):
     """查询学生，返回 (name, score)，不存在返回 None"""
     # 请在此处编写代码
-    pass
+    info = students.get(sid)
+    if info:
+        return(info["name"],info["score"])
+    return None
+    
 
 def top_students(students, n):
     """返回成绩最高的 n 个学生的名字列表"""
     # 请在此处编写代码
-    pass
+    rank = sorted(students.items(),key = lambda x:x[1]["score"],reverse=True)
+    lst =[]
+    for sid,info in rank[:n]:
+        lst.append(info["name"])
+    return lst
 
 
 # ============================================================
