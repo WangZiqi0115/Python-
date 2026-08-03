@@ -1,4 +1,0 @@
-Python is a powerful programming language
-Python is easy to learn
-Programming in Python is fun
-Learn Python every day

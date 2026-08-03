@@ -8,9 +8,7 @@ __pycache__/
 
 # 临时文件
 _test_temp.txt
-_temp_*.txt
-
-# 虚拟环境
-venv/
-.venv/
-env/
+_test_*.txt
+测试.txt
+示例文章.txt
+test.txt
