@@ -14,7 +14,13 @@ def write_and_read(filename, lines):
     write_and_read("test.txt", ["a", "b"]) -> ["a", "b"]
     """
     # 请在此处编写代码
-    pass
+    with open(filename,"w",encoding="utf-8") as fin:
+        for word in lines:
+            fin.write(f"{word}\n")
+    with open(filename,"r",encoding="utf-8") as fout:
+        line = [line.strip() for line in fout if line.strip()]
+    return line
+
 
 
 # ============================================================
@@ -27,7 +33,16 @@ def append_lines(filename):
     append_lines("test.txt") -> ["第一行", "第二行", "第三行"]
     """
     # 请在此处编写代码
-    pass
+    with open(filename,"w",encoding="utf-8") as f1:
+        f1.write("第一行\n第二行\n")
+        
+    with open(filename,"a",encoding="utf-8") as f2:
+        f2.write("第三行")
+    with open(filename,"r",encoding="utf-8") as f3:
+        result = f3.read()
+    return result.strip().split("\n")
+        
+
 
 
 # ============================================================
@@ -38,7 +53,12 @@ def append_lines(filename):
 # ============================================================
 def read_file_safe(filename):
     # 请在此处编写代码
-    pass
+    try:
+        with open(filename,"r",encoding="utf-8")as f:
+            return [line.strip()for line in f if line.strip()]
+    except FileNotFoundError:
+        return []
+
 
 
 # ============================================================
@@ -49,7 +69,10 @@ def read_file_safe(filename):
 # ============================================================
 def safe_divide(a, b):
     # 请在此处编写代码
-    pass
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "不能除以0"
 
 
 # ============================================================
@@ -60,7 +83,10 @@ def safe_divide(a, b):
 # ============================================================
 def parse_number(text):
     # 请在此处编写代码
-    pass
+    try:
+        return int(text)
+    except Exception:
+        return 0 
 
 
 # ============================================================
@@ -79,7 +105,16 @@ def analyze_csv(filename):
     analyze_csv(filename) -> (["张三", "李四", "王五"], 91.3)
     """
     # 请在此处编写代码
-    pass
+    name = []
+    score = []
+    with open(filename,"r",encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                parts = line.strip().split(",") 
+                name.append(parts[0])
+                score.append(parts[1])
+
+    return name,round(sum(int(x)for x in score) / len(score),1)
 
 
 # ============================================================
@@ -93,7 +128,12 @@ def word_frequency(filename):
     word_frequency(filename) -> {"hello": 2, "world": 1}
     """
     # 请在此处编写代码
-    pass
+    with open(filename,"r",encoding="utf-8") as f:
+        words = f.read().lower().strip().split()
+        count ={}
+        for word in words:
+            count[word] = count.get(word,0) + 1
+    return count
 
 
 # ============================================================
@@ -107,12 +147,20 @@ def word_frequency(filename):
 def save_scores(filename, students):
     """把学生成绩写入文件"""
     # 请在此处编写代码
-    pass
+    with open(filename,"w",encoding="utf-8") as f:
+        for k,v in students.items():
+            f.write(f"{k},{v}\n")
 
 def load_scores(filename):
     """从文件读取学生成绩，返回字典"""
     # 请在此处编写代码
-    pass
+    dct = {}
+    with open(filename,"r",encoding="utf-8") as i:
+        lines = [line.strip().split(",")for line in i if line.strip()]
+        for data in lines:
+            dct[data[0]] = int(data[1])
+    return dct
+
 
 
 # ============================================================
