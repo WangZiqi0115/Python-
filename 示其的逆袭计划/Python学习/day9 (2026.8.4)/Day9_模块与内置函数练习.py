@@ -14,11 +14,11 @@ Day 9 · 模块与包、常用内置函数 练习 (2026.8.4)
 #   5. 判断 3 是否是整数类型（isinstance）
 # ============================================================
 def problem1():
-    a = None  # 请修改：把 "123" 转成整数
-    b = None  # 请修改：把 3.14159 保留 2 位小数
-    c = None  # 请修改：求 -5 的绝对值
-    d = None  # 请修改：求 [3, 7, 2, 9] 的最大值
-    e = None  # 请修改：判断 3 是否是整数类型
+    a = int("123")  # 请修改：把 "123" 转成整数
+    b = round(3.14159,2)  # 请修改：把 3.14159 保留 2 位小数
+    c = abs(-5)
+    d = max([3, 7, 2, 9])  # 请修改：求 [3, 7, 2, 9] 的最大值
+    e = isinstance(3,int)  # 请修改：判断 3 是否是整数类型
     return a, b, c, d, e
 
 
@@ -32,10 +32,10 @@ def problem1():
 # ============================================================
 def problem2():
     import math
-    a = None  # 请修改：求 81 的平方根
-    b = None  # 请修改：求 3.7 向下取整
-    c = None  # 请修改：求 2 的 10 次方
-    d = None  # 请修改：圆周率 pi 保留 2 位小数
+    a = math.sqrt(81)  # 请修改：求 81 的平方根
+    b = math.floor(3.7)  # 请修改：求 3.7 向下取整
+    c = math.pow(2,10)  # 请修改：求 2 的 10 次方
+    d = round(math.pi,2)  # 请修改：圆周率 pi 保留 2 位小数
     return a, b, c, d
 
 
@@ -48,9 +48,9 @@ def problem2():
 # ============================================================
 def problem3():
     import random
-    a = None  # 请修改：生成 1~100 之间的随机整数
-    b = None  # 请修改：从 ["石头", "剪刀", "布"] 中随机选一个
-    c = None  # 请修改：生成一个 0~1 之间的随机小数
+    a = random.randint(1,100)  # 请修改：生成 1~100 之间的随机整数
+    b = random.choice(["石头", "剪刀", "布"])  # 请修改：从 ["石头", "剪刀", "布"] 中随机选一个
+    c = random.random()  # 请修改：生成一个 0~1 之间的随机小数
     return a, b, c
 
 
@@ -65,6 +65,20 @@ def guess_game():
     target = random.randint(1, 20)
     attempts = 0
     # 请在此处编写代码
+    while True:
+        num = int(input("请输入1-20之间的数字\n"))
+        if num > target:
+            attempts += 1
+            print("太大了")
+        elif num < target:
+            attempts += 1
+            print("太小了")
+        else:
+            attempts += 1
+            print(f"猜对了，用了{attempts}次")
+            break
+            
+    
     
     return attempts
 
@@ -78,9 +92,9 @@ def guess_game():
 # ============================================================
 def problem5():
     import os
-    a = None  # 请修改：获取当前工作目录
-    b = None  # 请修改：判断 "data.txt" 是否存在
-    c = None  # 请修改：拼接 "folder" 和 "file.txt"
+    a = os.getcwd()  # 请修改：获取当前工作目录
+    b = os.path.exists("data.txt")  # 请修改：判断 "data.txt" 是否存在
+    c = os.path.join("folder","file.txt")  # 请修改：拼接 "folder" 和 "file.txt"
     return a, b, c
 
 
@@ -92,7 +106,8 @@ def problem5():
 # ============================================================
 def problem6():
     # 请在此处编写代码：创建并导入 utils.py，调用其中的函数
-    pass
+    import utils
+    utils.get_avg()
 
 
 # ============================================================
@@ -108,6 +123,21 @@ def rps_game(choice):
     options = ["石头", "剪刀", "布"]
     computer = random.choice(options)
     # 请在此处编写代码
+    if choice == computer:
+        result = "平局"
+    elif choice == "石头" and computer == "剪刀":
+        result = "你赢了"
+    elif choice == "剪刀" and computer == "布":
+        result = "你赢了"
+    elif choice == "布" and computer == "石头":
+        result = "你赢了"
+    elif computer == "石头" and choice == "剪刀":
+        result = "你输了"
+    elif computer == "剪刀" and choice == "布":
+        result = "你输了"
+    elif computer == "布" and choice == "石头":
+        result = "你输了"
+    
     
     return computer, result
 
@@ -125,7 +155,13 @@ def load_scores(filename):
     load_scores(filename) -> [95, 87]
     """
     # 请在此处编写代码
-    pass
+    with open(filename,"r",encoding="utf-8") as f:
+        lines = [line.strip().split(",")for line in f if line.strip()]
+        scores = []
+        for score in lines:
+            scores.append(int(score[1]))
+    return scores
+
 
 
 # ============================================================
