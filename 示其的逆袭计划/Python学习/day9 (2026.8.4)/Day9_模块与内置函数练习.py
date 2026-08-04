@@ -14,11 +14,11 @@ Day 9 · 模块与包、常用内置函数 练习 (2026.8.4)
 #   5. 判断 3 是否是整数类型（isinstance）
 # ============================================================
 def problem1():
-    a = None  # 请修改：int("123")
-    b = None  # 请修改：round(3.14159, 2)
-    c = None  # 请修改：abs(-5)
-    d = None  # 请修改：max([3, 7, 2, 9])
-    e = None  # 请修改：isinstance(3, int)
+    a = None  # 请修改：把 "123" 转成整数
+    b = None  # 请修改：把 3.14159 保留 2 位小数
+    c = None  # 请修改：求 -5 的绝对值
+    d = None  # 请修改：求 [3, 7, 2, 9] 的最大值
+    e = None  # 请修改：判断 3 是否是整数类型
     return a, b, c, d, e
 
 
@@ -32,10 +32,10 @@ def problem1():
 # ============================================================
 def problem2():
     import math
-    a = None  # 请修改：sqrt(81)
-    b = None  # 请修改：floor(3.7)
-    c = None  # 请修改：pow(2, 10) 或 2 ** 10
-    d = None  # 请修改：round(math.pi, 2)
+    a = None  # 请修改：求 81 的平方根
+    b = None  # 请修改：求 3.7 向下取整
+    c = None  # 请修改：求 2 的 10 次方
+    d = None  # 请修改：圆周率 pi 保留 2 位小数
     return a, b, c, d
 
 
@@ -48,9 +48,9 @@ def problem2():
 # ============================================================
 def problem3():
     import random
-    a = None  # 请修改：randint(1, 100)
-    b = None  # 请修改：choice(["石头", "剪刀", "布"])
-    c = None  # 请修改：random()
+    a = None  # 请修改：生成 1~100 之间的随机整数
+    b = None  # 请修改：从 ["石头", "剪刀", "布"] 中随机选一个
+    c = None  # 请修改：生成一个 0~1 之间的随机小数
     return a, b, c
 
 
@@ -78,9 +78,9 @@ def guess_game():
 # ============================================================
 def problem5():
     import os
-    a = None  # 请修改：getcwd()
-    b = None  # 请修改：path.exists("data.txt")
-    c = None  # 请修改：path.join("folder", "file.txt")
+    a = None  # 请修改：获取当前工作目录
+    b = None  # 请修改：判断 "data.txt" 是否存在
+    c = None  # 请修改：拼接 "folder" 和 "file.txt"
     return a, b, c
 
 
@@ -91,9 +91,7 @@ def problem5():
 # 然后在下面的函数里 import 它并调用
 # ============================================================
 def problem6():
-    # 请先创建 utils.py，然后：
-    # import utils
-    # 调用 utils.get_avg(...)
+    # 请在此处编写代码：创建并导入 utils.py，调用其中的函数
     pass
 
 
