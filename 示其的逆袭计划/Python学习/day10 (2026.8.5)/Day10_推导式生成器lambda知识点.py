@@ -226,6 +226,13 @@ total = sum(x**2 for x in range(100))          # 不用建中间列表
 funcs = [lambda x: x * i for i in range(3)]
 # 你以为 funcs[0](5) = 0？其实是 10！
 # 因为 lambda 捕获的是变量 i 的"最终值"（循环结束 i=2）
+#
+# 【补充】funcs[0](5) 的括号是什么意思？
+#   funcs[0] 是从列表里"取出第 1 个函数"（它本身是 lambda 函数）
+#   (5) 是"调用这个函数"，把 5 传给参数 x
+#   所以 funcs[0](5) = 取出函数 → 调用 → x=5 → 5 * i
+#   类比：print("hello") 里的 "hello" 就是传给 print 的参数
+#   语法格式：函数名(参数)；这里的"函数名"是从列表里取出来的
 
 # 修复：
 funcs = [lambda x, i=i: x * i for i in range(3)]
