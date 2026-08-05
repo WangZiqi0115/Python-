@@ -107,7 +107,7 @@ def problem7():
     ]
     names = [name["name"] for name in students]        # 请修改：所有姓名
     top_names = [name["name"] for name in students if name["score"] >= 90 ]    # 请修改：>= 90 的姓名
-    avg = round(sum(score["score"] for score in students) / len(students))         # 请修改：平均分（保留1位）
+    avg = round(sum(score["score"] for score in students) / len(students),1)         # 请修改：平均分（保留1位）
     ranked = [name["name"] for name in sorted(students,key= lambda x:x["score"],reverse=True)]       # 请修改：按成绩从高到低的姓名列表
     
     return names, top_names, avg, ranked
