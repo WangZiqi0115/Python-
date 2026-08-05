@@ -109,6 +109,22 @@ even = list(filter(lambda x: x % 2 == 0, nums))      # [2, 4]
 matrix = [[1, 2], [3, 4], [5, 6]]
 flat = [num for row in matrix for num in row]
 # [1, 2, 3, 4, 5, 6]
+#
+# 执行过程详解：
+# 第一个 for row in matrix 是"外层循环"，先取出每一个小列表：
+#   row = [1, 2]     （matrix 的第 0 个元素）
+#   row = [3, 4]     （matrix 的第 1 个元素）
+#   row = [5, 6]     （matrix 的第 2 个元素）
+#
+# 第二个 for num in row 是"内层循环"，把当前小列表里的每个数取出来：
+#   row = [1, 2]  → num = 1, 2
+#   row = [3, 4]  → num = 3, 4
+#   row = [5, 6]  → num = 5, 6
+#
+# 最前面的 num 是"输出表达式"，把每个 num 放进结果列表：
+#   结果按顺序收集：1, 2, 3, 4, 5, 6
+#
+# 记忆口诀：先外层后内层，谁在 for 前面谁先执行
 # 等价于：
 # flat = []
 # for row in matrix:
