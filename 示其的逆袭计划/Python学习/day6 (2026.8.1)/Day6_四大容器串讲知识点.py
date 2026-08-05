@@ -66,6 +66,25 @@ s.remove(2)          # ✅
 # 推导式       [...]     (...)     {k:v ...}     {...}
 # 去重         ❌        ❌        ❌            ✅ 天生去重
 
+# 【补充】元组找索引和列表一样用 .index()：
+#   t = (10, 20, 30); t.index(30) → 2（返回位置）
+#   注意区分：t[2] 是"位置2的元素"（30），t.index(30) 是"元素30的位置"（2）
+#   两者方向相反：t[下标]→元素，t.index(元素)→下标
+
+# 【补充】sorted(students) vs sorted(students.items())：
+#   sorted(students)           → 只对键排序，返回键列表
+#   sorted(students.items(), key=...) → 对键值对排序，还能拿到完整信息
+#   想按值排序必须用 items()，否则只有键没法比
+
+# 【补充】取字典最大值对应的键：
+#   max(students, key=students.get) → 按值比大小，返回最大值的键
+#   和 sorted 的 key 同理：key 指定"比什么"，返回"键"
+
+# 【补充】获取符合条件的键：
+#   .keys() 没有参数，不能带条件
+#   用推导式：passed = [name for name, score in d.items() if score >= 60]
+#   if info: 表示"info 不为空才继续"（None/空容器为假，非空为真）
+
 
 # ============================================================
 # 四、四大容器的遍历方式

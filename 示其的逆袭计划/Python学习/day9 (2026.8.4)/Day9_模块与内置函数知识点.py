@@ -19,6 +19,17 @@ import math_tools                      # 导入整个模块
 math_tools.add(3, 5)                   # 用 模块名.函数名 调用 → 8
 math_tools.multiply(3, 5)              # 15
 
+# 【补充】模块文件必须和导入它的文件在同一文件夹吗？
+#   不一定，但同一文件夹最简单。Python 按顺序搜索：
+#   1. 当前文件所在目录  2. PYTHONPATH  3. 标准库  4. site-packages
+#   子文件夹：from tools import utils
+#   其他位置：需要 sys.path.append("路径") 加入搜索路径
+
+# 【补充】想查看模块信息：
+#   dir(模块)        → 列出所有函数
+#   help(模块)       → 完整文档
+#   模块.__file__    → 文件路径（math 是 .pyd 编译文件，不是文本）
+
 from math_tools import add             # 只导入某个函数
 add(3, 5)                              # 直接用函数名 → 8
 

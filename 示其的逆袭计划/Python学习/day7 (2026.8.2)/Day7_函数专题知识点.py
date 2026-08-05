@@ -73,6 +73,12 @@ result = do_nothing()  # result = None！
 # 你踩过的坑：方法有没有返回值？
 # 修改原对象的操作（append/remove/sort/clear）→ 返回 None
 # 生成新对象的操作（pop/copy/sorted/切片）→ 有返回值
+# 【补充】更准确的理解：
+#   判断标准不是"改没改原对象"，而是"有没有产出物要交给调用者"
+#   append 改了列表但没有产出物 → None
+#   pop 改了列表但把被删的值交出来 → 有返回值
+#   max/get 什么都没改但查出结果 → 有返回值
+#   口诀："只做事不交差" → None；"做事还交差" → 返回值
 
 lst = [1, 2, 3]
 r1 = lst.append(4)      # r1 = None！append 只是修改 lst，不递东西
@@ -186,6 +192,9 @@ max(scores, key=scores.get)   # "张三"
 nums = [1, 2, 3, 4]
 squared = list(map(lambda x: x**2, nums))
 print(squared)        # [1, 4, 9, 16]
+# 【补充】不套 list() 会得到 <map object>，因为 map 返回的是"懒加载"对象
+#   它不立刻算结果，等遍历时才一个个给（类似生成器）
+#   想看内容：list(map(...)) / for 循环 / 或直接用列表推导式
 
 # filter(函数, 列表)：按条件筛选元素
 even = list(filter(lambda x: x % 2 == 0, nums))
@@ -222,6 +231,11 @@ print(mx, mn, avg)          # 90 55 71.67
 # *args：接收任意多个位置参数，打包成元组
 def my_sum(*args):
     return sum(args)
+# 【补充】不用 *args 的常规写法：传一个列表进去
+#   def my_sum(numbers): return sum(numbers)
+#   my_sum([1, 2, 3])   ← 调用时包成列表
+#   *args 的区别：调用时直接 my_sum(1, 2, 3)，自动打包成元组
+#   参数个数确定 → 普通参数；不确定 → *args
 
 my_sum(1, 2, 3)            # 6
 my_sum(1, 2, 3, 4, 5)      # 15
@@ -257,3 +271,12 @@ show_info(name="示其", age=18)
 
 # 坑 6：函数参数是内部名字
 # 对策：定义函数时想好内部变量名，调用时只关心传什么值
+
+# 【补充】get() 返回的是"值"不是"键"：
+#   scores.get("张三") → 95（传键，返回值）
+#   不存在时返回 None 或默认值：scores.get("王五", 0) → 0
+
+# 【补充】函数里写两个 return 会发生什么？
+#   return 执行到就立刻结束函数，后面的代码永远走不到
+#   def bad(): return 1; return 2 → 只会返回 1
+#   想根据条件返回不同值，用 if/else 分支各写一个 return

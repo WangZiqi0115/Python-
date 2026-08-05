@@ -15,6 +15,17 @@ f = open("data.txt", "r")     # 打开文件（默认 r 可省略）
 content = f.read()            # 读全部内容，返回字符串
 f.close()                     # 用完必须关闭！
 print(content)
+# 【补充】文件创建在哪里？
+#   open("xxx.txt", "w") 创建在当前工作目录（运行 Python 时的目录）
+#   用 os.getcwd() 查看当前位置；写完整路径可指定其他位置
+#   f 是文件对象（类似"把手的标签"），内容要用 read()/readlines()/遍历取出
+#   print(f) 显示的是文件信息，不是文件内容
+
+# 【补充】读取结果的类型：
+#   f.read()       → 字符串 str
+#   f.readline()   → 字符串 str（一行）
+#   f.readlines()  → 列表 list（每行一个元素）
+#   for line in f  → 每轮是一个字符串
 
 # 逐行读取
 f = open("data.txt", "r")
@@ -102,6 +113,17 @@ try:
     risky_code()
 except Exception as e:
     print("出错了：", e)
+# 【补充】risky_code() 是示例占位名（未定义），换成你真实的代码
+#   e 是异常对象，print(e) 显示错误描述
+#   例：int("abc") 出错 → e 显示 "invalid literal for int()..."
+#   except Exception as e 就是"把报错信息交到你手上"
+
+# 【补充】想先写入再读取，需要两个 with（一个 w 一个 r）
+#   因为 w 打开写完文件就关闭了，指针在末尾
+#   也可以 w+ 但写完要 f.seek(0) 移回开头，现阶段不推荐
+
+# 【补充】文件对象只能用一次遍历（像磁带，读完就没了）
+#   需要反复处理 → 先读进列表：lines = f.readlines()，再操作列表
 
 
 # ============================================================
@@ -201,3 +223,11 @@ def count_words(filename):
 
 # 陷阱 5：except 太宽泛
 # 不要直接 except:（捕获所有），尽量写具体异常类型
+
+# 【补充】'int' object is not iterable 报错
+#   原因：对整数用 for 循环（for x in 5）
+#   排查：检查 for 后面的变量是不是列表/字符串/range，用 type() 确认
+
+# 【补充】AttributeError 报错
+#   原因：调用了该类型不存在的方法（如字符串 .append、列表 .get）
+#   排查：看报错里 '类型' object has no attribute '方法名'，换该类型真正有的方法

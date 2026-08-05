@@ -138,6 +138,12 @@ sum([1, 2, 3])       # 6
 # all：列表里全部为真才返回 True
 # 在 Python 中，0、None、空字符串""、空列表[] 都被视为假（False）
 # 非零数字、非空字符串等被视为真（True）
+# 【补充】True / False / 0 / 1 / None 的区别：
+#   True/False 是布尔值，表示"是/否"
+#   0/1 是普通整数，但在 if 判断里 0 视为假、非零视为真
+#   None 是"空值/什么都没有"，不是 0 也不是 False
+#   None == 0 → False；None is None → True（None 只和自己相等）
+#   判断是否为 None 用 is：if x is None
 any([0, 1, 0])       # True（有一个非零）
 all([1, 2, 3])       # True
 all([1, 0, 3])       # False
@@ -164,6 +170,10 @@ d = sorted(b, reverse=True)  # [5, 4, 3, 1, 1]
 # key 是一个"提取函数"：告诉 sorted 按元素的哪一部分来比大小
 # 比如学生是 (名字, 分数)，用 lambda x: x[1] 表示"取每个学生的分数来排序"
 # 如果有现成的函数（如 len），可以直接传 key=len，不用自己定义
+# 【补充】key 为什么要传函数？因为 sorted 不知道你想按什么比，
+#   key 提供"提取规则"：对每个元素调用这个函数，用返回值比大小
+#   sorted(列表, key=函数名) 里的函数名不加括号，是"把技能交给别人调用"
+#   len 本身是函数，所以可以直接 key=len；没有现成函数时用 lambda 现写
 students = [("Alice", 95), ("Bob", 87), ("Charlie", 92)]
 by_score = sorted(students, key=lambda x: x[1], reverse=True)
 # [("Alice", 95), ("Charlie", 92), ("Bob", 87)]
@@ -320,3 +330,31 @@ odd  = [x for x in nums if x % 2 == 1]     # [1, 3, 5]
 scores = [70, 95, 88, 92, 78]
 max_score = max(scores)               # 95
 max_idx = scores.index(max_score)     # 1
+
+
+# ============================================================
+# 十三、常见疑问补充（Q&A）
+# ============================================================
+
+# Q1：== 和 is 有什么区别？
+# == 比"值"（内容一样吗）；is 比"身份"（是同一个对象吗）
+a = [1, 2, 3]
+b = [1, 2, 3]
+a == b        # True   内容一样
+a is b        # False  不是同一个列表（内存里不同位置）
+
+# 判断 None 用 is：if x is None（规范写法）
+# 判断值相等用 ==：if score == 90
+
+# Q2：() [] {} 分别怎么用？
+# () 圆括号 → 调用函数 print() / 元组 (1, 2)
+# [] 方括号 → 创建列表 [1, 2] / 按索引取值 a[0] / 切片 a[1:3]
+# {} 花括号 → 字典 {"a": 1} / 集合 {1, 2}（看有没有冒号区分）
+# 数学运算里控制顺序只能用圆括号 ()，不能用 [] 和 {}
+
+# Q3：什么是可迭代（iterable）？
+# 能用 for x in ... 逐个取东西的对象，如列表、字符串、range
+# 整数、浮点数不可迭代：for x in 5 会报 TypeError
+
+# Q4：debug 是什么意思？
+# debug = 找 bug 修 bug。写代码 → 跑 → 报错 → 看错误信息 → 修好 → 再跑
