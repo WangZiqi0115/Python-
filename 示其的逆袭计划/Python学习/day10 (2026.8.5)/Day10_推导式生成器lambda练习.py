@@ -12,9 +12,9 @@ Day 10 · 推导式 / 生成器 / lambda 进阶 练习 (2026.8.5)
 #   3. 把 ["a", "b", "c"] 转成大写
 # ============================================================
 def problem1():
-    a = None  # 请修改：1~10 的平方
-    b = None  # 请修改：1~20 的偶数
-    c = None  # 请修改：["a", "b", "c"] 转大写
+    a = [num ** 2 for num in range(1,11)]  # 请修改：1~10 的平方
+    b = [num for num in range(1,21) if num % 2 == 0] # 请修改：1~20 的偶数
+    c = [letter.upper() for letter in ["a", "b", "c"]]  # 请修改：["a", "b", "c"] 转大写
     return a, b, c
 
 
@@ -25,8 +25,8 @@ def problem1():
 #   2. 用推导式生成 1~10 的"偶"/"奇"标记列表（选值）
 # ============================================================
 def problem2():
-    a = None  # 请修改：1~30 能被 3 整除
-    b = None  # 请修改：["偶", "奇", "偶", ...] 1~10
+    a = [num for num in range(1,31) if num % 3 == 0]  # 请修改：1~30 能被 3 整除
+    b = ["奇" if num % 2 == 1 else "偶" for num in range(1,11)]  # 请修改：["偶", "奇", "偶", ...] 1~10
     return a, b
 
 
@@ -38,8 +38,8 @@ def problem2():
 # ============================================================
 def problem3():
     matrix = [[1, 2], [3, 4], [5, 6]]
-    a = None  # 请修改：扁平化 matrix
-    b = None  # 请修改：0~2 的所有坐标对
+    a = [num for row in matrix for num in row]  # 请修改：扁平化 matrix
+    b = [(x,y) for x in range(0,3) for y in range(0,3)]  # 请修改：0~2 的所有坐标对
     return a, b
 
 
@@ -51,10 +51,10 @@ def problem3():
 #   3. 用 lambda 作为 sorted 的 key 按分数排序学生
 # ============================================================
 def problem4():
-    triple = None   # 请修改：lambda 乘以 3
-    add_two = None  # 请修改：lambda 两个数相加
+    triple = lambda x:x * 3   # 请修改：lambda 乘以 3
+    add_two = lambda a,b:a+b  # 请修改：lambda 两个数相加
     students = [("张三", 82), ("李四", 95), ("王五", 90)]
-    ranked = None   # 请修改：按分数从高到低
+    ranked = sorted(students,key = lambda x:x[1],reverse=True)   # 请修改：按分数从高到低
     
     return triple(5), add_two(3, 7), ranked
 
@@ -67,8 +67,8 @@ def problem4():
 #   3. 验证生成器用两次后第二次是空的
 # ============================================================
 def problem5():
-    a = None  # 请修改：1~10 平方的生成器 → 转列表
-    b = None  # 请修改：sum(生成器) 求 1~100 的和
+    a = list(x ** 2 for x in range(1,11))  # 请修改：1~10 平方的生成器 → 转列表
+    b = sum(x for x in range(1,101))  # 请修改：sum(生成器) 求 1~100 的和
     gen = (x for x in [1, 2, 3])
     first = list(gen)
     second = list(gen)
@@ -83,10 +83,10 @@ def problem5():
 #   3. 用推导式生成 1~10 中偶数的立方字典 {2:8, 4:64, ...}
 # ============================================================
 def problem6():
-    a = None  # 请修改：1~5 平方字典
+    a = {x:x ** 2 for x in range(1,6)}  # 请修改：1~5 平方字典
     d = {"a": 1, "b": 2}
-    b = None  # 请修改：反转字典
-    c = None  # 请修改：偶数立方字典
+    b = {k:v for v,k in d.items()}  # 请修改：反转字典
+    c = {x:x ** 3 for x in range(1,11) if x % 2 == 0}  # 请修改：偶数立方字典
     return a, b, c
 
 
@@ -105,10 +105,10 @@ def problem7():
         {"name": "王五", "score": 90},
         {"name": "赵六", "score": 76},
     ]
-    names = None        # 请修改：所有姓名
-    top_names = None    # 请修改：>= 90 的姓名
-    avg = None          # 请修改：平均分（保留1位）
-    ranked = None       # 请修改：按成绩从高到低的姓名列表
+    names = [name["name"] for name in students]        # 请修改：所有姓名
+    top_names = [name["name"] for name in students if name["score"] >= 90 ]    # 请修改：>= 90 的姓名
+    avg = round(sum(score["score"] for score in students) / len(students))         # 请修改：平均分（保留1位）
+    ranked = [name["name"] for name in sorted(students,key= lambda x:x["score"],reverse=True)]       # 请修改：按成绩从高到低的姓名列表
     
     return names, top_names, avg, ranked
 
@@ -126,7 +126,8 @@ def clean_data(raw_data):
     clean_data([" 95 ", "", " 87", "92 ", "  "]) -> [95, 87, 92]
     """
     # 请在此处编写代码
-    pass
+    lines =[int(num.strip()) for num in raw_data if num.strip()]
+    return lines
 
 
 # ============================================================
@@ -151,7 +152,7 @@ if __name__ == "__main__":
     try:
         a, b = problem2()
         assert a == [3, 6, 9, 12, 15, 18, 21, 24, 27, 30], f"被3整除: {a}"
-        assert b == ["偶", "奇", "偶", "奇", "偶", "奇", "偶", "奇", "偶", "奇"], f"奇偶标记: {b}"
+        assert b == ["奇", "偶", "奇", "偶", "奇", "偶", "奇", "偶", "奇", "偶"], f"奇偶标记: {b}"
         score += 10
         print("[PASS] 第 2 题")
     except Exception as e:
