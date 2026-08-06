@@ -16,7 +16,7 @@ Python学习/
 ├── day8 (2026.8.3)/    # Day 8：文件 I/O + 异常处理
 ├── day9 (2026.8.4)/    # Day 9：模块与内置函数
 ├── day10 (2026.8.5)/   # Day 10：推导式生成器lambda
-├── day11 (2026.8.6)/   # Day 11：总复习（待学习）
+├── day11 (2026.8.6)/   # Day 11：总复习
 ├── Python30天计划.md
 ├── Python常见报错速查.md
 └── Python学习日志.md
@@ -51,6 +51,7 @@ Python学习/
 | 8.3 | 返回值类型错误、f.write 参数、缺换行符 | 先看题目期望类型；f.write 只接收一个字符串；写多行要加 \n |
 | 8.4 | abs 和 max 用混、random() 少了 random、石头剪刀布逻辑写反、忘记 with open | 看清题目要求的内置函数；random 模块的方法要带前缀；输赢条件逐条验证；文件操作先写 with open |
 | 8.5 | lambda 包成列表、生成器没转 list、sort 返回 None、round 忘保留位数 | lambda 直接赋值不加 []；要列表就套 list()；排序用 sorted 接住结果；round(x, n) 带位数参数 |
+| 8.6 | 星期用英文、集合用 + 并集、write 传两参数、sorted 结果没取名字 | 测试期望中文；集合并集用 \|；write 拼一个字符串；sorted 后再推导式取名字 |
 
 ## Git 提交记录
 
@@ -66,4 +67,5 @@ Python学习/
 | 8/3 | Day8 文件IO完成 |
 | 8/4 | Day9 模块与内置函数完成 |
 | 8/5 | Day10 推导式/生成器/lambda 完成 |
+| 8/6 | Day11 综合复习完成 |
 | 8/4 | 新增 Day9 模块与内置函数学习内容 |

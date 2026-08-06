@@ -14,10 +14,10 @@ Day 11 · 前十日综合练习 (2026.8.6)
 #   4. 购物车（会增删） → 列表
 # ============================================================
 def problem1():
-    a = None  # 请修改：存放张三、李四、王五三个学生姓名，且要去重
-    b = None  # 请修改：存放固定不变的一周七天
-    c = None  # 请修改：用学号001、002映射到张三、李四
-    d = None  # 请修改：存放会增删的购物车，初始有牛奶、面包
+    a = {"张三","李四","王五"}  # 请修改：存放张三、李四、王五三个学生姓名，且要去重
+    b = ("周一","周二","周三","周四","周五","周六","周日")  # 请修改：存放固定不变的一周七天
+    c = {"001":"张三","002":"李四"}  # 请修改：用学号001、002映射到张三、李四
+    d = ["牛奶","面包"]  # 请修改：存放会增删的购物车，初始有牛奶、面包
     return a, b, c, d
 
 
@@ -32,9 +32,9 @@ def problem1():
 # ============================================================
 def problem2():
     text = "  Python is a powerful language  "
-    cleaned = None   # 请修改：strip + lower
-    words = None     # 请修改：按空格拆分
-    count = None     # 请修改：单词数
+    cleaned = text.lower().strip()   # 请修改：strip + lower
+    words = cleaned.split()     # 请修改：按空格拆分
+    count = len(words)     # 请修改：单词数
     return cleaned, words, count
 
 
@@ -47,9 +47,9 @@ def problem2():
 # ============================================================
 def problem3():
     scores = {"张三": 95, "李四": 82, "王五": 90, "赵六": 76}
-    wang_score = None   # 请修改：get 取王五，默认 0
-    avg = None          # 请修改：平均分保留1位
-    top_student = None  # 请修改：分数最高的学生
+    wang_score = scores.get("王五",0)   # 请修改：get 取王五，默认 0
+    avg = sum(num for num in scores.values())  / len(scores)        # 请修改：平均分保留1位
+    top_student = max(scores.items(),key = lambda x:x[1])[0]  # 请修改：分数最高的学生
     return wang_score, avg, top_student
 
 
@@ -63,9 +63,9 @@ def problem3():
 def problem4():
     math_club = {"张三", "李四", "王五"}
     coding_club = {"王五", "赵六", "孙七"}
-    both = None      # 请修改：两个都参加
-    only_coding = None  # 请修改：只参加编程社
-    all_members = None   # 请修改：所有不重复
+    both = math_club & coding_club      # 请修改：两个都参加
+    only_coding = coding_club - both  # 请修改：只参加编程社
+    all_members = math_club | coding_club   # 请修改：所有不重复
     return both, only_coding, all_members
 
 
@@ -77,8 +77,10 @@ def problem4():
 # ============================================================
 def safe_average(scores):
     # 请在此处编写代码
-    pass
-
+    try:
+        return round(sum(scores) / len(scores),1)
+    except:
+        return 0 
 
 # ============================================================
 # 练习 6 · 文件读写（10 分）
@@ -88,8 +90,12 @@ def safe_average(scores):
 # ============================================================
 def save_and_load(filename, data):
     # 请在此处编写代码
-    pass
-
+    with open(filename,"w",encoding="utf-8") as fin:
+        for item in data:
+            fin.write(item + "\n")
+    with open(filename,"r",encoding="utf-8") as fout:
+        lines = [line.strip() for line in fout]
+    return lines
 
 # ============================================================
 # 练习 7 · 推导式 + lambda（10 分）
@@ -105,9 +111,9 @@ def problem7():
         {"name": "王五", "score": 90},
         {"name": "赵六", "score": 76},
     ]
-    scores = None       # 请修改：所有成绩列表
-    top_names = None    # 请修改：>= 90 的姓名
-    ranked = None       # 请修改：按成绩降序的姓名列表
+    scores = [score["score"] for score in students]       # 请修改：所有成绩列表
+    top_names = [name["name"] for name in students if name["score"] >= 90]    # 请修改：>= 90 的姓名
+    ranked = [ s["name"] for s in sorted(students,key=lambda x:x["score"],reverse=True)]       # 请修改：按成绩降序的姓名列表
     return scores, top_names, ranked
 
 
@@ -124,7 +130,16 @@ def process_scores(filename):
     文件不存在 → ([], 0, 0, 0)
     """
     # 请在此处编写代码
-    pass
+    try:
+        with open(filename,"r",encoding="utf-8") as f:
+            scores = [int(score.strip().split(",")[1]) for score in f]
+        return scores,max(scores),min(scores),sum(scores) / len(scores)
+    except FileNotFoundError:
+        return [],0,0,0
+    
+    
+        
+
 
 
 # ============================================================
