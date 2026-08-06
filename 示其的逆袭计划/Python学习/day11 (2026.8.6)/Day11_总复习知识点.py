@@ -38,6 +38,11 @@
 # 判断：startswith / endswith / isdigit / isalpha
 # 切割拼接：split / join
 # 清洗：strip / lstrip / rstrip / replace
+# 【补充】四个清洗方法分别干嘛？
+#   strip()   去掉首尾空白："  hi  " → "hi"
+#   lstrip()  只去左边空白："  hi  " → "hi  "
+#   rstrip()  只去右边空白："  hi  " → "  hi"
+#   replace(旧, 新) 全文替换内容："hi hi".replace("hi","bye") → "bye bye"
 # 格式化：f"{name}：{score}分" / f"{x:.2f}" / f"{x:>10}"
 #
 # 【重点】字符串不可变：方法返回新字符串，原字符串不变
