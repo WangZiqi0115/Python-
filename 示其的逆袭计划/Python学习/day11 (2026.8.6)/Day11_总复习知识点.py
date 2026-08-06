@@ -18,6 +18,10 @@
 #   list(t) set(d) dict(zip(keys, values))
 # 常用操作：
 #   增删改查、遍历、推导式、sorted、len、in
+# 【补充】怎么查字典里有没有某个键或值？
+#   查键：键 in 字典（"张三" in d）
+#   查值：值 in 字典.values()（95 in d.values()）
+#   注意：in 字典 默认查的是键，不是值
 
 # 【记忆口诀】
 # 列表像"购物车"（能增删改）
