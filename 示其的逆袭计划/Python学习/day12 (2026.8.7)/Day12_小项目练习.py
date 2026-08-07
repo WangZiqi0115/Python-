@@ -21,7 +21,8 @@ Day 12 · 小项目实战：通讯录管理系统 (2026.8.7)
 # ============================================================
 def add_contact(contacts, name, phone, city):
     # 请在此处编写代码
-    pass
+    contacts[name] = {"phone":phone,"city":city}
+    return contacts
 
 
 # ============================================================
@@ -31,8 +32,11 @@ def add_contact(contacts, name, phone, city):
 # 返回联系人数量
 # ============================================================
 def list_contacts(contacts):
-    # 请在此处编写代码
-    pass
+    count = 0
+    for name,info in contacts.items():
+        print(f"{name} {info['phone']} {info['city']}")
+        count += 1
+    return count
 
 
 # ============================================================
@@ -42,7 +46,11 @@ def list_contacts(contacts):
 # ============================================================
 def find_contact(contacts, name):
     # 请在此处编写代码
-    pass
+    data =contacts.get(name)
+    if data :
+        return((data["phone"],data["city"]))
+    else:
+        return None
 
 
 # ============================================================
@@ -52,7 +60,11 @@ def find_contact(contacts, name):
 # ============================================================
 def delete_contact(contacts, name):
     # 请在此处编写代码
-    pass
+    delete = contacts.pop(name,None)
+    if delete:
+        return True
+    else:
+        return False
 
 
 # ============================================================
@@ -61,7 +73,9 @@ def delete_contact(contacts, name):
 # ============================================================
 def save_contacts(filename, contacts):
     # 请在此处编写代码
-    pass
+    with open(filename,"w",encoding="utf-8") as f:
+        for name,info in contacts.items():    
+            f.write(f"{name},{info['phone']},{info['city']}\n")
 
 
 # ============================================================
@@ -70,7 +84,17 @@ def save_contacts(filename, contacts):
 # ============================================================
 def load_contacts(filename):
     # 请在此处编写代码
-    pass
+    try:
+        dic = {}
+        with open(filename,"r",encoding="utf-8") as f:
+            lines = [line.strip().split(",") for line in f]
+            for i in range(len(lines)):
+                dic[lines[i][0]] = {"phone":lines[i][1],"city":lines[i][2]}
+        return dic
+    except FileNotFoundError:
+        return{}
+    
+            
 
 
 # ============================================================
@@ -87,6 +111,12 @@ def load_contacts(filename):
 def full_flow(filename):
     contacts = {}
     # 请在此处编写代码
+    add_contact(contacts,"张三","13800138000","重庆")
+    add_contact(contacts,"李四","13900139000","北京")
+    find_result = find_contact(contacts,"李四")
+    delete_result = delete_contact(contacts,"张三")
+    save_contacts(filename,contacts)
+    loaded = load_contacts(filename)
     
     return find_result, delete_result, loaded
 
@@ -102,8 +132,21 @@ def main_menu(contacts):
     while True:
         print("\n1. 添加  2. 查看  3. 查找  4. 删除  5. 退出")
         choice = input("请选择：")
+        
         if choice == "5":
             break
+        elif choice == "4":
+            actions += 1
+            delete_contact(contacts,input("请输入删除的名字"))
+        elif choice == "3":
+            actions += 1
+            find_contact(contacts,input("请输入要查找的名字"))
+        elif choice == "2":
+            actions += 1
+            list_contacts(contacts)
+        elif choice == "1":
+            actions += 1
+            add_contact(contacts,input("请输入要添加的姓名"),input("请输入要添加的电话"),input("请输入要添加的城市"))
         # 请在此处编写代码：处理 1-4 选项，每成功操作一次 actions += 1
     
     return actions
