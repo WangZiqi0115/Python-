@@ -11,7 +11,7 @@ Day 13 · 正则表达式 练习 (2026.8.8)
 def problem1():
     import re
     text = "我有3个苹果和12个橘子"
-    result = None  # 请修改：提取所有数字
+    result = re.findall(r"\d+",text)  # 请修改：提取所有数字
     return result
 
 
@@ -22,7 +22,7 @@ def problem1():
 def problem2():
     import re
     text = "Hello, world! Python is fun."
-    result = None  # 请修改：提取所有单词
+    result = re.findall(r"\w+",text)  # 请修改：提取所有单词
     return result
 
 
@@ -35,7 +35,7 @@ def problem2():
 def is_valid_phone(phone):
     import re
     # 请在此处编写代码
-    pass
+    return re.fullmatch(r"1\d{10}",phone) is not None
 
 
 # ============================================================
@@ -47,7 +47,7 @@ def is_valid_phone(phone):
 def is_valid_email(email):
     import re
     # 请在此处编写代码
-    pass
+    return re.fullmatch(r"\w+@\w+\.\w+",email) is not None
 
 
 # ============================================================
@@ -58,7 +58,7 @@ def is_valid_email(email):
 def problem5():
     import re
     text = "今天日期是2026-08-08，明天是2026-08-09"
-    result = None  # 请修改：提取第一个日期
+    result = re.search(r"\d{4}-\d{2}-\d{2}",text).group()  # 请修改：提取第一个日期
     return result
 
 
@@ -71,6 +71,10 @@ def problem6():
     import re
     text = "张三 13800138000 重庆"
     # 请在此处编写代码：提取姓名、电话、城市
+    data = re.search(r"(\w+) (\d{11}) (\w+)",text)
+    name = data.group(1)
+    phone = data.group(2)
+    city = data.group(3)
     
     return name, phone, city
 
@@ -82,7 +86,7 @@ def problem6():
 def problem7():
     import re
     log = "192.168.1.1 - - [08/Aug/2026] GET /index.html"
-    ip = None  # 请修改：提取 IP
+    ip = re.search(r"\d+\.\d+\.\d+\.\d+",log).group()  # 提取 IP
     return ip
 
 
@@ -97,7 +101,10 @@ def parse_scores(text):
     parse_scores("张三:95 李四:87 王五:92") -> ([("张三","95"),...], 91.3)
     """
     # 请在此处编写代码
-    pass
+    import re
+    data = re.findall(r"(\w+):(\d+)",text)
+    avg = round(sum(int(score[1]) for score in data) / len(data),1)
+    return data,avg
 
 
 # ============================================================
