@@ -17,11 +17,17 @@ students = [
 # ============================================================
 # 练习 1 · 取第一个学生姓名（10 分）
 # 从 students 中返回第一个学生的 name
+# students = [
+#     {"name": "张三", "score": 88, "city": "重庆"},
+#     {"name": "李四", "score": 95, "city": "北京"},
+#     {"name": "王五", "score": 72, "city": "重庆"},
+#     {"name": "赵六", "score": 90, "city": "上海"},
+# ]
 # 例：get_first_name(students) -> "张三"
 # ============================================================
 def get_first_name(students):
     # 请在此处编写代码
-    pass
+    return students[0]["name"]
 
 
 # ============================================================
@@ -32,7 +38,7 @@ def get_first_name(students):
 # ============================================================
 def get_score(scores, name, subject):
     # 请在此处编写代码
-    pass
+    return scores[name][subject]
 
 
 # ============================================================
@@ -43,28 +49,53 @@ def get_score(scores, name, subject):
 # ============================================================
 def avg_score(student):
     # 请在此处编写代码
-    pass
+    return round(sum(student["scores"]) / len(student["scores"]),1)
 
 
 # ============================================================
 # 练习 4 · 按分数排序（10 分）
 # 按 score 从高到低排序，返回学生姓名列表
+# students = [
+#     {"name": "张三", "score": 88, "city": "重庆"},
+#     {"name": "李四", "score": 95, "city": "北京"},
+#     {"name": "王五", "score": 72, "city": "重庆"},
+#     {"name": "赵六", "score": 90, "city": "上海"},
+# ]
 # 例：sort_by_score(students) -> ["李四", "赵六", "张三", "王五"]
 # ============================================================
 def sort_by_score(students):
     # 请在此处编写代码
-    pass
+    lst = []
+    rank = sorted(students,key = lambda x:x["score"],reverse=True)
+    for name in rank:
+        lst.append(name["name"])
+    return lst
 
+# 更简便写法（一行搞定，结果完全一样）：
+# return [s["name"] for s in sorted(students, key=lambda s: s["score"], reverse=True)]
 
 # ============================================================
 # 练习 5 · 按城市分组（10 分）
-# people = [{"name": "张三", "city": "重庆"}, ...]
+# 类型理解：
+#   people 是“列表套字典”
+#   外层 [] 表示有多个人；每个 {} 表示一个人
+#   每个人有 name 和 city 两个字段
+# people = [
+#     {"name": "张三", "city": "重庆"},
+#     {"name": "李四", "city": "北京"},
+#     {"name": "王五", "city": "重庆"},
+# ]
 # 返回 {"重庆": ["张三", "王五"], "北京": ["李四"]}
+# 目标：把“人列表”按城市分组，变成“城市 → 姓名列表”
 # 提示：用 defaultdict(list)
 # ============================================================
 def group_by_city(people):
     # 请在此处编写代码
-    pass
+    from collections import defaultdict
+    group = defaultdict(list)
+    for per in people:
+        group[per["city"]].append(per["name"])
+    return group
 
 
 # ============================================================
@@ -74,7 +105,7 @@ def group_by_city(people):
 # ============================================================
 def reverse_dict(d):
     # 请在此处编写代码
-    pass
+    return {k:v for v,k in d.items()}
 
 
 # ============================================================
@@ -85,18 +116,24 @@ def reverse_dict(d):
 # ============================================================
 def merge_dicts(d1, d2):
     # 请在此处编写代码
-    pass
-
+    return d1 | d2
 
 # ============================================================
 # 练习 8 · 提取所有姓名（10 分）
 # 返回 students 中所有人的 name 组成的列表
+# students = [
+#     {"name": "张三", "score": 88, "city": "重庆"},
+#     {"name": "李四", "score": 95, "city": "北京"},
+#     {"name": "王五", "score": 72, "city": "重庆"},
+#     {"name": "赵六", "score": 90, "city": "上海"},
+# ]
 # 例：get_names(students) -> ["张三", "李四", "王五", "赵六"]
 # 提示：列表推导式
 # ============================================================
 def get_names(students):
     # 请在此处编写代码
-    pass
+    return[name["name"] for name in students]
+
 
 
 # ============================================================
@@ -106,7 +143,7 @@ def get_names(students):
 # ============================================================
 def flatten(matrix):
     # 请在此处编写代码
-    pass
+    return[num for row in matrix for num in row]
 
 
 # ============================================================
@@ -118,7 +155,13 @@ def flatten(matrix):
 # ============================================================
 def safe_get(data, *keys):
     # 请在此处编写代码
-    pass
+    current = data
+    for key in keys:
+        if key in current:
+            current = current[key]
+        else:
+            return None
+    return current
 
 
 # ============================================================

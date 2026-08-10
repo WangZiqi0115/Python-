@@ -13,7 +13,7 @@
 student = {"name": "张三", "score": 95, "city": "重庆"}
 
 # 一个班级有很多学生，就把多个 dict 装进 list：
-students = [
+students = [ 
     {"name": "张三", "score": 95, "city": "重庆"},
     {"name": "李四", "score": 82, "city": "北京"},
     {"name": "王五", "score": 90, "city": "重庆"},
@@ -50,6 +50,8 @@ score_list = {
 # 4. list 套 list：二维表格 / 矩阵
 #    [[1, 2, 3], [4, 5, 6]]
 #    适合：矩阵、Excel 行数据、地图
+#    理解：二维列表 = 列表的列表，可以当成 Excel 表格
+#    外层列表的每个元素是一行，每行里面的元素是这一行的格子
 
 
 # ============================================================
@@ -92,16 +94,18 @@ except KeyError:
 print(value)                               # None
 
 # 通用小函数：逐层安全取，取不到返回 None
-def safe_get(obj, *keys):
-    current = obj
-    for key in keys:
-        if isinstance(current, dict) and key in current:
-            current = current[key]
-        elif isinstance(current, list) and isinstance(key, int) and 0 <= key < len(current):
-            current = current[key]
-        else:
-            return None
-    return current
+# *keys：可变位置参数。调用时传几个参数，就把它们打包成一个元组 keys。
+# 例如 safe_get(data, "a", "b", "c") → obj=data, keys=("a", "b", "c")
+def safe_get(obj, *keys):  # 定义函数：obj 是起点，*keys 打包所有要逐层取的键
+    current = obj          # current 表示“当前已经走到哪一层”，先指向整个 obj
+    for key in keys:       # 依次取出每一个要取的键/下标
+        if isinstance(current, dict) and key in current:  # 当前是字典，并且 key 存在
+            current = current[key]   # 就往下走一层
+        elif isinstance(current, list) and isinstance(key, int) and 0 <= key < len(current):  # 当前是列表，key 是合法整数下标
+            current = current[key]   # 用下标取下一层
+        else:                # 类型不对 / 键不存在 / 下标越界
+            return None      # 直接返回 None，不报错
+    return current           # 所有键都取完，返回最终值
 
 print(safe_get(data, "a", "b", "c"))       # 42
 print(safe_get(data, "a", "x"))            # None
@@ -137,7 +141,11 @@ names_by_score = [s["name"] for s in sorted_by_score]
 # ['李四', '王五', '张三']
 
 # 按多个字段：key=lambda s: (s["score"], s["name"])
-# 先比分数，分数相同再比名字
+# 判断规则：
+#   每个学生先变成元组 (score, name)
+#   Python 先比较第一个元素 score；分数不同就直接按分数排序
+#   分数相同，才继续比较第二个元素 name（字符串按编码顺序比）
+#   如果还想分数从高到低，加 reverse=True，整个结果会反过来
 
 
 # ============================================================
@@ -146,9 +154,14 @@ names_by_score = [s["name"] for s in sorted_by_score]
 # 把学生按城市分组：城市 → 学生姓名列表
 from collections import defaultdict
 
-groups = defaultdict(list)
+groups = defaultdict(list)   # 特殊字典：访问不存在的键时，自动调用 list() 造一个空列表并放进去
 for stu in students:
-    groups[stu["city"]].append(stu["name"])
+    groups[stu["city"]].append(stu["name"])   # 第一次出现某城市：自动建 []，再 append；之后直接 append
+
+# 等价普通字典写法：
+# if stu["city"] not in groups:
+#     groups[stu["city"]] = []
+# groups[stu["city"]].append(stu["name"])
 
 # groups 是 defaultdict，打印出来像普通字典：
 # {'重庆': ['张三', '王五'], '北京': ['李四']}
@@ -181,10 +194,16 @@ d3 = {"a": 1, "b": 2} | {"b": 3, "c": 4}
 # 提取所有学生的名字：列表推导式
 all_names = [stu["name"] for stu in students]
 
-# 二维列表扁平化：外层 for 在前，内层 for 在后
+# 二维列表扁平化：把“表格”按行拆开，摊平成一条一维列表
+# 外层 for 在前，内层 for 在后，就像先拿行、再拿行里的每个数
 matrix = [[1, 2, 3], [4, 5, 6]]
 flat = [num for row in matrix for num in row]
 # [1, 2, 3, 4, 5, 6]
+# 等价于：
+# flat = []
+# for row in matrix:        # 先取一行，如 [1, 2, 3]
+#     for num in row:       # 再取这一行里的每个数
+#         flat.append(num)  # 一个一个放进 flat
 
 # 提取嵌套 dict 里的所有值（一层）
 all_subject_scores = [score for subject_scores in scores.values() for score in subject_scores.values()]
@@ -197,6 +216,9 @@ all_subject_scores = [score for subject_scores in scores.values() for score in s
 # JSON 是嵌套结构最常见的"文本形态"，网页数据、配置文件都是它
 import json
 
+# json.dumps：把 Python 对象（students）转成 JSON 字符串
+# ensure_ascii=False：中文保持原样，不变成 \uXXXX 转义
+# indent=2：每层缩进 2 个空格，输出更整齐、更容易看
 json_text = json.dumps(students, ensure_ascii=False, indent=2)
 print(json_text)
 
@@ -207,21 +229,40 @@ print(json_text)
 # ============================================================
 # 十一、常见陷阱
 # ============================================================
+# 本节用到的示例数据（每个陷阱都从这里取）：
+# students = [
+#     {"name": "张三", "score": 95, "city": "重庆"},
+#     {"name": "李四", "score": 82, "city": "北京"},
+#     {"name": "王五", "score": 90, "city": "重庆"},
+# ]
+# score_list = {
+#     "张三": [95, 87, 92],
+#     "李四": [70, 88, 96],
+# }
+# matrix = [[1, 2, 3], [4, 5, 6]]
+
 # 陷阱 1：键不存在直接报错
+#   students[0] = {"name": "张三", "score": 95, "city": "重庆"}
 #   students[0]["missing"]  ❌ KeyError
 #   安全写法：.get("missing", 默认值)
 
 # 陷阱 2：list 索引越界
+#   score_list["张三"] = [95, 87, 92]  ← 这是列表
 #   score_list["张三"][10]  ❌ IndexError
+#   列表只有 0、1、2 三个下标，取 10 就超界
 
 # 陷阱 3：修改嵌套值时弄错层级
-#   正确：students[0]["score"] = 100
-#   错误：students["score"] = 100  ❌ 类型错误
+#   students = [{"name": "张三", "score": 95, "city": "重庆"}, ...]  ← 最外层是 list
+#   正确：students[0]["score"] = 100   # 先取第 0 个学生（dict），再改 score
+#   错误：students["score"] = 100      # students 是 list，不能用字符串当下标
 
 # 陷阱 4：排序忘记 reverse
+#   sorted(students, key=lambda s: s["score"]) 默认从小到大
 #   要降序必须写 reverse=True
+#   sorted(students, key=lambda s: s["score"], reverse=True)
 
 # 陷阱 5：嵌套列表的浅拷贝
+#   matrix = [[1, 2, 3], [4, 5, 6]]
 #   copy = matrix[:] 只复制外层，里面的小列表还是共用的
 #   需要彻底独立时用 deepcopy：
 import copy
