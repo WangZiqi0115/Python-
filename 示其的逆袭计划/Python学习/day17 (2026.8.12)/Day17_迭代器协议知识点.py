@@ -5,6 +5,27 @@
 #
 # 本文件是速查手册，想动手验证时把代码复制到"代码测试专用.py"里运行。
 
+# 【补充】文件名里的"协议"是什么意思？
+#   协议 = 一套约定好的规则
+#   Python 迭代器协议规定：
+#     1. 对象提供 __iter__()，返回一个迭代器
+#     2. 对象提供 __next__()，每次返回下一个元素，没得取就抛 StopIteration
+#   只要遵守这套约定，for / next / list / sum 等工具就都能统一使用它
+#   类比：插座协议 = 标准三孔，不管什么电器，插头符合就能用
+
+# 【补充】迭代器大白话总览（发糖果比喻）：
+#   [10, 20, 30] 像一盒糖，里面装着三颗，随时能看、能数
+#   iter(nums)  = 把盒子交给"发糖机器"，机器记住现在该发第几颗
+#   next(机器)  = 机器递给你下一颗糖，然后自动指向下一颗
+#   StopIteration = 机器说"没了，发完了"，队伍结束
+#   for x in nums = 机器自动一颗颗发到你手里，发完自动停
+#   生成器 = 机器不提前准备整盒糖，而是现场变出下一颗，所以省内存
+#   一句话：
+#     可迭代对象 = 装数据的东西
+#     迭代器 = 记住进度、一次给一个的机器
+#     iter = 造机器；next = 让机器给一个；StopIteration = 给完了
+#     for = 让机器自动发到结束
+
 
 # ============================================================
 # 一、可迭代对象（iterable）
@@ -105,26 +126,32 @@ print(list(reversed([1, 2, 3])))       # [3, 2, 1]
 # ============================================================
 # 七、自定义迭代器（重点）
 # ============================================================
+# 【补充】下面的 class 还没有系统学过，先这样理解：
+#   class = "模板"，Countdown(3) 按模板造出一个倒计时对象
+#   __init__ = 造对象时自动执行的初始化，self.current = start 存起始值
+#   __iter__ = 告诉 Python"我能被 for 循环"，返回 self
+#   __next__ = 每次取下一个元素时执行，取完抛 StopIteration
+#   今天会照抄、能看懂结构就行；OOP 系统学习在 Day 32
 # 一个类想支持 for 循环，要实现两个方法：
 #   __iter__()   返回迭代器（通常返回 self）
 #   __next__()   返回下一个元素；没得取了就抛 StopIteration
 
-class Countdown:
-    def __init__(self, start):
-        self.current = start
+class Countdown:                    # 定义模板：这个类叫 Countdown（倒计时）
+    def __init__(self, start):      # 创建对象时自动执行的方法，start 是传入的起始值
+        self.current = start        # 把起始值记在这个对象身上，变量名叫 current
 
-    def __iter__(self):
-        return self
+    def __iter__(self):             # 让这个对象能被 for 循环的方法
+        return self                 # 返回自己，意思是"我自己就是迭代器"
 
-    def __next__(self):
-        if self.current <= 0:
-            raise StopIteration
-        value = self.current
-        self.current -= 1
-        return value
+    def __next__(self):             # 每次 for 循环要下一个元素时执行
+        if self.current <= 0:       # 如果当前值已经 <= 0，说明没得数了
+            raise StopIteration     # 抛出"没有更多元素"的信号，for 循环收到后结束
+        value = self.current        # 先把当前值存到 value 里
+        self.current -= 1           # 当前值减 1，为下一次做准备
+        return value                # 把 value 交给 for 循环
 
-for n in Countdown(3):
-    print(n)              # 3 2 1
+for n in Countdown(3):              # 造一个起始值为 3 的倒计时对象，for 自动调用 __iter__/__next__
+    print(n)                        # 依次打印 3、2、1
 
 # 也可以用生成器函数实现同样的效果（Day 10 学过 yield）：
 def gen_countdown(start):
@@ -133,6 +160,18 @@ def gen_countdown(start):
         start -= 1
 
 print(list(gen_countdown(3)))          # [3, 2, 1]
+
+# 【补充】yield 是什么？
+#   yield = "暂停并交出一个值，下次调用继续"
+#   对比 return：return 直接结束函数；yield 只是暂停，还会回来
+#   含 yield 的函数被调用时不执行函数体，而是返回一个生成器对象
+#   gen_countdown(3) 的执行过程：
+#     第 1 次 next → start=3>0 → yield 3 → 暂停
+#     第 2 次 next → 继续：start-=1 → 2 → yield 2 → 暂停
+#     第 3 次 next → 继续：start-=1 → 1 → yield 1 → 暂停
+#     第 4 次 next → 继续：start-=1 → 0 → while 结束 → StopIteration
+#   list(gen_countdown(3)) 自动迭代，得到 [3, 2, 1]
+#   生成器 = Python 自动实现 __iter__/__next__ 的迭代器，省去手写类
 
 
 # ============================================================
@@ -186,3 +225,93 @@ print(hasattr([1, 2, 3], "__next__"))  # False，列表不是迭代器
 
 # 陷阱 5：迭代过程中修改列表可能出问题
 #   遍历时不要随便 append/remove，先收集到新列表
+
+
+# ============================================================
+# 十一、例题精讲（看懂了再去做练习）
+# ============================================================
+
+# ------------------------------------------------------------
+# 例题 1：用 iter / next 取第一个和最后一个
+# 题目：nums = [5, 10, 15, 20]，不直接用 nums[0] / nums[-1]，
+#       用迭代器取出 (第一个, 最后一个)
+# 思路：先 next 拿第一个；然后一直 next，每拿到一个就更新 last，
+#       直到抛 StopIteration，此时 last 就是最后一个
+# ------------------------------------------------------------
+def first_and_last(nums):
+    it = iter(nums)              # 造发糖机器
+    first = next(it)             # 第一颗糖
+    last = first                 # 先假设只有一个元素
+    while True:
+        try:
+            last = next(it)      # 继续拿下一颗，更新 last
+        except StopIteration:
+            break                # 没糖了，结束
+    return first, last
+
+print(first_and_last([5, 10, 15, 20]))   # (5, 20)
+
+# 关键点：StopIteration 不是错误，而是"发完了"的结束信号
+
+
+# ------------------------------------------------------------
+# 例题 2：自定义迭代器输出偶数
+# 题目：写一个 Evens 类，从 0 开始依次给出偶数，最多给 count 个
+# 思路：__iter__ 返回 self；__next__ 里先判断给没给够，
+#       给够了就抛 StopIteration，否则返回当前偶数并 +2
+# ------------------------------------------------------------
+class Evens:
+    def __init__(self, count):
+        self.count = count       # 最多给几个
+        self.given = 0           # 已经给了几个
+        self.value = 0           # 下一个要给的偶数
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.given >= self.count:
+            raise StopIteration
+        result = self.value
+        self.value += 2
+        self.given += 1
+        return result
+
+print(list(Evens(4)))            # [0, 2, 4, 6]
+
+# 关键点：每次 __next__ 都要更新"进度"，否则会无限循环
+
+
+# ------------------------------------------------------------
+# 例题 3：生成器版斐波那契
+# 题目：用 yield 写 fib(n)，产生前 n 个斐波那契数
+# 思路：a, b 从 0, 1 开始；每次 yield 当前的 a，
+#       然后 a, b = b, a + b 递推下一个
+# ------------------------------------------------------------
+def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+print(list(fib(6)))              # [0, 1, 1, 2, 3, 5]
+
+# 关键点：yield 让函数变成生成器，for / list 会不断 next 它
+
+
+# ------------------------------------------------------------
+# 例题 4：next 默认值实现"按块取数"
+# 题目：it = iter([1, 2, 3, 4, 5])，每次取 2 个，不足 2 个就返回 None
+# 思路：用 next(it, None) 安全取数，取不到返回 None
+# ------------------------------------------------------------
+it_demo = iter([1, 2, 3, 4, 5])
+
+block1 = (next(it_demo, None), next(it_demo, None))   # (1, 2)
+block2 = (next(it_demo, None), next(it_demo, None))   # (3, 4)
+block3 = (next(it_demo, None), next(it_demo, None))   # (5, None)
+
+print(block1)                    # (1, 2)
+print(block2)                    # (3, 4)
+print(block3)                    # (5, None)
+
+# 关键点：next(it, 默认值) 在取不到时不会抛异常，很适合处理"可能不够"的数据

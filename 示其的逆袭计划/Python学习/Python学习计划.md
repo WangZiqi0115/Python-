@@ -38,7 +38,7 @@
 | 14 | 8.9 | 数字类型与运算符深挖（✅ 已完成） | int/float/bool/complex、进制、hex/oct/bin、int(s, base)、bit_length、浮点误差、inf/nan；算术/比较/逻辑/成员/身份运算符、位运算 `& \| ^ << >> ~`、连续比较、优先级表 |
 | 15 | 8.10 | 小专题：嵌套数据结构实战（✅ 已完成） | list 套 dict / dict 套 list、多层安全访问、按字段排序、defaultdict 分组、反转/合并字典、提取与扁平化、JSON 结构预览 |
 | 16 | 8.11 | 高级解包（✅ 已完成） | `a, *b, c` 星号解包、嵌套解包、调用解包 `func(*args)` / `func(**kwargs)`、`zip(*data)` |
-| 17 | 8.12 | 迭代器协议 | iter/next、for 循环底层、StopIteration、自定义可迭代对象、常见迭代器 |
+| 17 | 8.12 | 迭代器协议（✅ 已完成） | iter/next、for 循环底层、StopIteration、自定义可迭代对象、常见迭代器 |
 | 18 | 8.13 | 闭包与作用域 | 嵌套函数、LEGB 查找顺序、nonlocal、闭包工厂、闭包陷阱 |
 | 19 | 8.14 | 装饰器入门 | 装饰器原理、@ 语法、functools.wraps、计时/日志装饰器 |
 | 20 | 8.15 | functools 与 keyword-only | reduce、partial、lru_cache、cmp_to_key、* 后面的必关键字参数 |
