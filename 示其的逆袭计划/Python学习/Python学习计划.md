@@ -39,7 +39,7 @@
 | 15 | 8.10 | 小专题：嵌套数据结构实战（✅ 已完成） | list 套 dict / dict 套 list、多层安全访问、按字段排序、defaultdict 分组、反转/合并字典、提取与扁平化、JSON 结构预览 |
 | 16 | 8.11 | 高级解包（✅ 已完成） | `a, *b, c` 星号解包、嵌套解包、调用解包 `func(*args)` / `func(**kwargs)`、`zip(*data)` |
 | 17 | 8.12 | 迭代器协议（✅ 已完成） | iter/next、for 循环底层、StopIteration、自定义可迭代对象、常见迭代器 |
-| 18 | 8.13 | 闭包与作用域 | 嵌套函数、LEGB 查找顺序、nonlocal、闭包工厂、闭包陷阱 |
+| 18 | 8.13 | 闭包与作用域（✅ 已完成） | 嵌套函数、LEGB 查找顺序、nonlocal、闭包工厂、闭包陷阱 |
 | 19 | 8.14 | 装饰器入门 | 装饰器原理、@ 语法、functools.wraps、计时/日志装饰器 |
 | 20 | 8.15 | functools 与 keyword-only | reduce、partial、lru_cache、cmp_to_key、* 后面的必关键字参数 |
 | 21 | 8.16 | 异常进阶 | raise、assert、自定义异常、异常链、else/finally 深入 |

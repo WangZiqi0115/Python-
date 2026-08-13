@@ -12,7 +12,9 @@ Day 18 · 闭包与作用域 练习 (2026.8.13)
 # ============================================================
 def make_adder(n):
     # 请在此处编写代码
-    pass
+    def a(x):
+        return x + n
+    return a
 
 
 # ============================================================
@@ -22,7 +24,10 @@ def make_adder(n):
 # ============================================================
 def make_multiplier(n):
     # 请在此处编写代码
-    pass
+    def multiplier(x):
+        return x * n
+    return multiplier
+
 
 
 # ============================================================
@@ -33,7 +38,12 @@ def make_multiplier(n):
 # ============================================================
 def make_counter():
     # 请在此处编写代码
-    pass
+    count = 0
+    def counter():
+        nonlocal count
+        count += 1
+        return count
+    return counter
 
 
 # ============================================================
@@ -43,7 +53,9 @@ def make_counter():
 # ============================================================
 def make_greeter(name):
     # 请在此处编写代码
-    pass
+    def f():
+        return(f"你好，{name}")
+    return f
 
 
 # ============================================================
@@ -53,7 +65,10 @@ def make_greeter(name):
 # ============================================================
 def make_power(exp):
     # 请在此处编写代码
-    pass
+    def f(base):
+        return base ** exp
+    return f
+
 
 
 # ============================================================
@@ -65,7 +80,12 @@ def make_power(exp):
 # ============================================================
 def make_accumulator():
     # 请在此处编写代码
-    pass
+    s = 0
+    def f(value):       
+        nonlocal s
+        s += value
+        return s
+    return f
 
 
 # ============================================================
@@ -75,7 +95,9 @@ def make_accumulator():
 # ============================================================
 def make_prefix(prefix):
     # 请在此处编写代码
-    pass
+    def f(text):
+        return prefix + text
+    return f
 
 
 # ============================================================
@@ -88,8 +110,9 @@ def make_prefix(prefix):
 def create_multipliers():
     funcs = []
     for i in range(3):
+        funcs.append(lambda i = i:i* 2)
         # 请在此处编写代码
-        pass
+        
     return funcs
 
 
@@ -100,7 +123,9 @@ def create_multipliers():
 # ============================================================
 def make_suffix(suffix):
     # 请在此处编写代码
-    pass
+    def f(text):
+        return text + suffix
+    return f
 
 
 # ============================================================
@@ -113,7 +138,14 @@ def make_suffix(suffix):
 # ============================================================
 def make_operation(op):
     # 请在此处编写代码
-    pass
+    def add(a,b):
+        return a + b 
+    def mul(a,b):
+        return a * b
+    if op == "add":
+        return add
+    elif op == "mul":
+        return mul
 
 
 # ============================================================
