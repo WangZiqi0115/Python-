@@ -60,6 +60,12 @@ print(apply(add, 3, 4))        # 7
 
 def my_decorator(func):
     def wrapper(*args, **kwargs):
+        # 【补充】这里的 *args 和 **kwargs 是什么意思？
+        #   *args    把"所有多余的位置参数"打包成元组 args，如 say_hello("示其")
+        #   **kwargs 把"所有多余的关键字参数"打包成字典 kwargs，如 greet(name="示其")
+        #   合在一起 = wrapper 不管原函数要几个参数，都能"照单全收"
+        #   下面 func(*args, **kwargs) 是"拆包转交"：定义里 * 是打包，调用里 * 是拆开，
+        #   参数原样传给原函数。详细讲解见下方"五、*args 与 **kwargs：接住任意参数"
         print("调用前")
         result = func(*args, **kwargs)   # 真正执行原函数
         print("调用后")
