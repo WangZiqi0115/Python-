@@ -19,7 +19,12 @@ import contextlib
 # ============================================================
 def my_decorator(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+@my_decorator
+def add(a,b):
+    return a + b
 
 
 # ============================================================
@@ -29,7 +34,13 @@ def my_decorator(func):
 # ============================================================
 def double_result(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        result = func(*args,**kwargs)
+        return result * 2
+    return wrapper
+@double_result
+def add(a,b):
+    return a + b
 
 
 # ============================================================
@@ -39,7 +50,13 @@ def double_result(func):
 # ============================================================
 def uppercase_result(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        result = func(*args,**kwargs)
+        return str(result).upper()
+    return wrapper
+@uppercase_result
+def greet(name):
+    return f"hello,{name}"
 
 
 # ============================================================
@@ -49,7 +66,13 @@ def uppercase_result(func):
 # ============================================================
 def add_exclamation(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        result = func(*args,**kwargs)
+        return str(result) + "!"
+    return wrapper
+@add_exclamation
+def word(word):
+    return word
 
 
 # ============================================================
@@ -59,7 +82,13 @@ def add_exclamation(func):
 # ============================================================
 def wrap_result(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        result = func(*args,**kwargs)
+        return f"[{result}]"
+    return wrapper
+@wrap_result
+def num(num):
+    return num
 
 
 # ============================================================
@@ -70,7 +99,15 @@ def wrap_result(func):
 # ============================================================
 def count_calls(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        wrapper.call_count += 1
+        return func(*args,**kwargs)
+    wrapper.call_count = 0
+    return wrapper
+@count_calls
+def add(a,b):
+    return a + b
+
 
 
 # ============================================================
@@ -81,7 +118,16 @@ def count_calls(func):
 # ============================================================
 def time_it(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        start = time.perf_counter()
+        result = func(*args,**kwargs)
+        end = time.perf_counter()
+        elapsed = end - start
+        return result, elapsed
+    return wrapper
+@time_it
+def add(a,b):
+    return a + b 
 
 
 # ============================================================
@@ -91,7 +137,16 @@ def time_it(func):
 # ============================================================
 def keep_name(func):
     # 请在此处编写代码
-    pass
+    @functools.wraps(func)
+    def wrapper(*args,**kwargs):
+        functools.wraps(func)
+        return func(*args,**kwargs)
+    return wrapper
+@keep_name
+def my_add(a,b):
+    return a + b
+
+
 
 
 # ============================================================
@@ -102,6 +157,16 @@ def keep_name(func):
 # ============================================================
 def safe_call(func):
     # 请在此处编写代码
+    def wrapper(*args,**kwargs):
+        try:
+            return func(*args,**kwargs)
+        except Exception:
+            return None
+    return wrapper
+@safe_call 
+def bad():
+    pass
+def good():
     pass
 
 
@@ -113,7 +178,14 @@ def safe_call(func):
 # ============================================================
 def log_call(func):
     # 请在此处编写代码
-    pass
+    def wrapper(*args,**kwargs):
+        print(f"调用 {func.__name__} ...")
+        return func(*args,**kwargs)
+    return wrapper
+@log_call
+def add(a,b):
+    return a + b
+    
 
 
 # ============================================================
