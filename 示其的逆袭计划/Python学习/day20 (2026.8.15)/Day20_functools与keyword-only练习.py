@@ -13,7 +13,7 @@ import functools
 # 练习 1 · reduce 求和（10 分）
 # 用 functools.reduce 实现 sum_list(lst)，返回列表所有数的和
 # 例：sum_list([1, 2, 3, 4]) -> 10
-# 提示：reduce(lambda a, b: a + b, lst)
+# 提示：用 functools.reduce
 # ============================================================
 def sum_list(lst):
     # 请在此处编写代码
@@ -24,7 +24,7 @@ def sum_list(lst):
 # 练习 2 · reduce 连乘（10 分）
 # 用 functools.reduce 实现 product(lst)，返回列表所有数的乘积
 # 例：product([2, 3, 4]) -> 24
-# 提示：reduce(lambda a, b: a * b, lst, 1)，第三个参数是初始值
+# 提示：用 functools.reduce，注意空列表的情况
 # ============================================================
 def product(lst):
     # 请在此处编写代码
@@ -35,8 +35,7 @@ def product(lst):
 # 练习 3 · partial 固定指数（10 分）
 # 用 functools.partial 实现 square，让 square(n) 返回 n 的平方
 # 例：square(3) -> 9, square(10) -> 100
-# 提示：square = functools.partial(pow, exp=2)（用关键字固定指数）
-# 注意：functools.partial(pow, 2) 固定的是底数，得到的是"2 的 n 次方"
+# 提示：用 functools.partial（想不起参数名就 help(pow)）
 # ============================================================
 square = None   # 请在此处编写代码
 
@@ -44,7 +43,7 @@ square = None   # 请在此处编写代码
 # ============================================================
 # 练习 4 · partial 固定进制（10 分）
 # 用 functools.partial 实现 bin2int，让 bin2int("1010") -> 10
-# 提示：bin2int = functools.partial(int, base=2)
+# 提示：用 functools.partial（想不起参数名就 help(int)）
 # ============================================================
 bin2int = None  # 请在此处编写代码
 
@@ -53,7 +52,6 @@ bin2int = None  # 请在此处编写代码
 # 练习 5 · keyword-only 必填参数（10 分）
 # 写 greet(name, *, greeting)，greeting 必须用关键字传且必填
 # 例：greet("示其", greeting="早上好") -> "早上好，示其"
-# 提示：def greet(name, *, greeting):
 # ============================================================
 def greet(name, *, greeting):
     # 请在此处编写代码
@@ -75,7 +73,7 @@ def make_sentence(verb, *, obj="Python"):
 # 练习 7 · lru_cache 优化斐波那契（10 分）
 # 给 fib 加上 @functools.lru_cache 装饰器，让 fib(40) 也能秒算
 # 例：fib(10) -> 55, fib(50) -> 12586269025
-# 提示：在 def fib(n): 上面加 @functools.lru_cache(maxsize=None)
+# 提示：递归（别忘了加缓存，不然 fib(50) 会卡很久）
 # ============================================================
 def fib(n):
     # 请在此处编写代码
@@ -86,7 +84,7 @@ def fib(n):
 # 练习 8 · lru_cache 统计缓存（10 分）
 # 给 climb 加 @functools.lru_cache(maxsize=None)，climb(n) 是爬楼梯走法数
 # 例：climb(10) -> 89
-# 提示：climb(1)=1, climb(2)=2, climb(n)=climb(n-1)+climb(n-2)
+# 提示：递归，边界是 n=1 和 n=2
 # ============================================================
 def climb(n):
     # 请在此处编写代码
@@ -98,7 +96,7 @@ def climb(n):
 # 写 by_length(a, b)，让 sorted(words, key=functools.cmp_to_key(by_length))
 # 按字符串长度升序排序（短的在前）
 # 例：["python", "c", "go"] -> ["c", "go", "python"]
-# 提示：比较函数返回 len(a) - len(b)
+# 提示：用 functools.cmp_to_key
 # ============================================================
 def by_length(a, b):
     # 请在此处编写代码
@@ -110,7 +108,7 @@ def by_length(a, b):
 # 写 by_unit(a, b)，让 sorted(nums, key=functools.cmp_to_key(by_unit))
 # 按数字的个位数升序排序
 # 例：[23, 41, 12] 的个位数是 3, 1, 2 -> [41, 12, 23]
-# 提示：比较函数返回 (a % 10) - (b % 10)
+# 提示：用 functools.cmp_to_key
 # ============================================================
 def by_unit(a, b):
     # 请在此处编写代码
