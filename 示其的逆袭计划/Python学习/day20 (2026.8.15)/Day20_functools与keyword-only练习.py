@@ -17,7 +17,7 @@ import functools
 # ============================================================
 def sum_list(lst):
     # 请在此处编写代码
-    return functools.reduce(lambda a, b: a + b, lst)
+    return None
 
 
 # ============================================================
@@ -28,7 +28,7 @@ def sum_list(lst):
 # ============================================================
 def product(lst):
     # 请在此处编写代码
-    return functools.reduce(lambda a, b: a * b, lst, 1)
+    return None
 
 
 # ============================================================
@@ -38,7 +38,7 @@ def product(lst):
 # 提示：square = functools.partial(pow, exp=2)（用关键字固定指数）
 # 注意：functools.partial(pow, 2) 固定的是底数，得到的是"2 的 n 次方"
 # ============================================================
-square = functools.partial(pow, exp=2)
+square = None   # 请在此处编写代码
 
 
 # ============================================================
@@ -46,7 +46,7 @@ square = functools.partial(pow, exp=2)
 # 用 functools.partial 实现 bin2int，让 bin2int("1010") -> 10
 # 提示：bin2int = functools.partial(int, base=2)
 # ============================================================
-bin2int = functools.partial(int, base=2)
+bin2int = None  # 请在此处编写代码
 
 
 # ============================================================
@@ -57,7 +57,7 @@ bin2int = functools.partial(int, base=2)
 # ============================================================
 def greet(name, *, greeting):
     # 请在此处编写代码
-    return f"{greeting}，{name}"
+    return None
 
 
 # ============================================================
@@ -68,7 +68,7 @@ def greet(name, *, greeting):
 # ============================================================
 def make_sentence(verb, *, obj="Python"):
     # 请在此处编写代码
-    return f"{verb} {obj}"
+    return None
 
 
 # ============================================================
@@ -77,11 +77,9 @@ def make_sentence(verb, *, obj="Python"):
 # 例：fib(10) -> 55, fib(50) -> 12586269025
 # 提示：在 def fib(n): 上面加 @functools.lru_cache(maxsize=None)
 # ============================================================
-@functools.lru_cache(maxsize=None)
 def fib(n):
-    if n < 2:
-        return n
-    return fib(n - 1) + fib(n - 2)
+    # 请在此处编写代码
+    return None
 
 
 # ============================================================
@@ -90,14 +88,9 @@ def fib(n):
 # 例：climb(10) -> 89
 # 提示：climb(1)=1, climb(2)=2, climb(n)=climb(n-1)+climb(n-2)
 # ============================================================
-@functools.lru_cache(maxsize=None)
 def climb(n):
     # 请在此处编写代码
-    if n == 1:
-        return 1
-    if n == 2:
-        return 2
-    return climb(n - 1) + climb(n - 2)
+    return None
 
 
 # ============================================================
@@ -109,7 +102,7 @@ def climb(n):
 # ============================================================
 def by_length(a, b):
     # 请在此处编写代码
-    return len(a) - len(b)
+    return None
 
 
 # ============================================================
@@ -121,7 +114,7 @@ def by_length(a, b):
 # ============================================================
 def by_unit(a, b):
     # 请在此处编写代码
-    return (a % 10) - (b % 10)
+    return None
 
 
 # ============================================================

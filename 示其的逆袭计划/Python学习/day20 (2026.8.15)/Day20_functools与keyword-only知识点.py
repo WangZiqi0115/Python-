@@ -80,6 +80,14 @@ print(f2("示其", 1, 2, hobby="编程"))
 #         第一次拿前两个算，结果再和第三个算……最后只剩一个值。
 # 用法：reduce(函数, 序列[, 初始值])
 #       函数必须接收两个参数，返回一个值（这个值会继续参与下一次合并）
+# 【补充】合并函数为什么必须接收"两个"参数？
+#   reduce 每次调用合并函数时，都恰好传两个值进去（这就是"两两合并"）：
+#     没写初始值：第一次 = (第1个元素, 第2个元素)，之后 = (上次结果, 下一个元素)
+#     写了初始值：第一次 = (初始值, 第1个元素)，之后同上
+#   所以形参只写一个（如 lambda x: x）会报错 TypeError：传了 2 个值接不住
+#   （变量名随意起，但第 1 个变量 = 当前累积结果，第 2 个变量 = 下一个元素）
+#   特例：序列只有 1 个元素且没写初始值 → 不调用合并函数，直接返回这个元素
+#        空序列且没写初始值 → 报错（见下方陷阱）
 
 import functools
 
@@ -134,6 +142,16 @@ square = functools.partial(pow, exp=2)   # 固定指数为 2（用关键字固�
 print(square(3))        # 9      # 等价于 pow(3, 2)
 print(square(10))       # 100    # 等价于 pow(10, 2)
 
+# 【补充】用 partial 固定参数，要不要记住参数名？
+#   两种固定方式：
+#     ① 按位置固定（不用记名字）：partial(pow, 2) —— 固定"第 1 个"参数，只能从左往右
+#     ② 按关键字固定（要记名字）：partial(pow, exp=2) —— 固定"名叫 exp 的"参数
+#   什么时候必须记名字？想固定"第 2 个及以后"的位置参数时：
+#     按位置只能从左边开始、跳不过去，只能用关键字名来锁定
+#   记不住名字怎么办？help(pow) 看签名 → pow(base, exp, mod=None)，名字一眼可见
+#     自己写的函数：直接看 def 那行的参数名
+#   小结：固定最左边第 1 个参数 → 不用记名字；固定后面的参数 → 必须知道参数名
+
 # 【补充】只想固定"底数"怎么办？按位置固定第一个参数：
 pow2 = functools.partial(pow, 2)   # 固定底数为 2 → 得到"2 的 n 次方"函数
 print(pow2(3))          # 8      # 等价于 pow(2, 3)
@@ -183,6 +201,14 @@ def fib(n):
 
 # 不加缓存算 fib(35) 要好几秒（重复算了几百万次）
 # 加了缓存，每个 n 只算一次，瞬间出结果：
+# 【补充】开头的 @ 是干嘛的？（Day 19 学的装饰器语法糖）
+#   @functools.lru_cache(maxsize=None) 等价于：
+#     fib_fast = functools.lru_cache(maxsize=None)(fib_fast)
+#   步骤拆开看：
+#     ① functools.lru_cache(maxsize=None) 先调用 lru_cache（带参数 maxsize=None），得到一个"装饰器"
+#     ② @ 把装饰器套在 fib_fast 上 = 加工出"带小本本记忆的新函数"，替换掉原来的 fib_fast
+#   和 Day 19 的 @my_decorator 一样都是"给函数穿外套"；
+#   区别只是 lru_cache 要先接收 maxsize 参数（None = 小本本不限量），所以多写一对括号
 @functools.lru_cache(maxsize=None)
 def fib_fast(n):
     if n < 2:
@@ -223,6 +249,17 @@ print(fib_fast.cache_info())
 # 旧式写法：写一个比较函数 cmp(a, b)，返回：
 #       负数 → a 排在 b 前面；0 → 一样大；正数 → a 排在 b 后面
 # functools.cmp_to_key(cmp函数) 把这个比较函数转成 sorted 能用的 key。
+# 【补充】"转成 sorted 能用的 key"是什么意思？
+#   sorted 的 key 只认"单参数函数"：key=lambda x: ... 给每个元素算一个值，按值排
+#   而比较函数 cmp(a, b) 要两个参数 → 直接放 key= 位置会报错（少一个参数）
+#   cmp_to_key 干的事：把你的 cmp 包装成"单参数、能比大小的特殊对象"，
+#     排序时每两个包装对象比大小 → 自动调用你的 cmp(a, b) 来判谁大谁小
+#   类比：cmp 是"裁判"（两两判大小）；sorted 只认"每人的号码牌"（key）；
+#     cmp_to_key = 把裁判包装成魔法号码牌，贴给每个元素，排序时自动请裁判
+#   对比：
+#     sorted(words, key=len)                       # ✅ 单参数函数直接用
+#     sorted(words, key=by_length)                 # ❌ by_length 要两个参数，报错
+#     sorted(words, key=functools.cmp_to_key(by_length))  # ✅ 包装后就能用
 
 # 例子 1：按字符串长度排序（短的在前）
 def by_length(a, b):
@@ -241,6 +278,36 @@ sorted_nums = sorted(nums2, key=functools.cmp_to_key(by_unit))
 print(sorted_nums)      # [41, 12, 23, 35, 8]
 # 个位数分别是：1, 2, 3, 5, 8 → 升序
 
+# 【补充】什么样的函数"既能用 lambda 写、也能用 def 写"，什么样"只能用 def 写"？
+#   lambda 的规矩：只能写"一个表达式"，不能写多条语句（if / for / 赋值都不行）
+#   注意：lambda 也可以有两个参数（lambda a, b: ...），限制只在"函数体只能是一个表达式"
+#
+#  ① 既能 lambda 也能 def：逻辑只有一个表达式 → 两种写法完全等价
+#     例：按长度升序的比较函数（函数体就一句 return len(a) - len(b)）
+def by_len_def(a, b):                               # def 写法
+    return len(a) - len(b)
+
+by_len_lambda = lambda a, b: len(a) - len(b)        # lambda 写法，功能一模一样
+
+words3 = ["python", "c", "go"]
+print(sorted(words3, key=functools.cmp_to_key(by_len_def)))     # ['c', 'go', 'python']
+print(sorted(words3, key=functools.cmp_to_key(by_len_lambda)))  # ['c', 'go', 'python'] 结果一样
+#
+#  ② 只能用 def 写：逻辑要"多条语句"（if 分支等）→ lambda 单表达式写不了
+#     例：先比长度，长度相同再比字典序（需要 if 分支）
+def by_len_then_alpha(a, b):
+    if len(a) != len(b):        # 长度不同：短的在前
+        return len(a) - len(b)
+    if a < b:                   # 长度相同：字典序小的在前
+        return -1
+    if a > b:
+        return 1
+    return 0
+
+words4 = ["bb", "a", "aa", "b"]
+print(sorted(words4, key=functools.cmp_to_key(by_len_then_alpha)))
+# ['a', 'b', 'aa', 'bb']：先按长度 1、1、2、2，长度相同的 a<b、aa<bb
+
 # 【补充】为什么不能用普通 key 做"按个位数排"？
 #   key=lambda x: x % 10 其实可以！个位数就是一个"值"
 #   cmp_to_key 的真正优势是"需要同时看两个元素"的规则，
@@ -253,6 +320,12 @@ print(sorted_nums)      # [41, 12, 23, 35, 8]
 #   返回 0：a == b
 #   返回 正数：a > b（a 排后面）
 #   常见写法：return a - b（数字比大小）；return len(a) - len(b)（比长度）
+# 【补充】为什么"返回负数 = a 排前面"？（把这一点想通就全懂了）
+#   sorted 把返回值当成"a - b 的符号"来用，数学上：
+#     a - b < 0  ⟺  a < b  ⟺  升序时 a 该排在 b 前面
+#   所以 return a - b 天然就是"升序比较器"：
+#     例：比较 (3, 5) → 3-5 = -2 < 0 → 3 在前 → 升序 ✓
+#   想降序：把减法反过来 return b - a（或直接用 reverse=True，见下一条补充）
 
 # 【补充】排序方向：想倒序，两种办法
 #   ① sorted(..., reverse=True)
@@ -283,7 +356,30 @@ print(pow3(4))          # 81     # 3**4
 # 例题 3：用 lru_cache 优化"爬楼梯"问题
 # 题目：上 n 级台阶，每次可以走 1 级或 2 级，共有多少种走法？
 # 思路：f(n) = f(n-1) + f(n-2)，f(1)=1, f(2)=2（本质和斐波那契一样）
+# 【补充】这个思路怎么来的？（数学递推）
+#   核心：看"最后一步"怎么走，分类讨论：
+#     最后一步走 1 级 → 之前已在第 n-1 级 → 走法数 f(n-1)
+#     最后一步走 2 级 → 之前已在第 n-2 级 → 走法数 f(n-2)
+#   两种可能互斥，加起来：f(n) = f(n-1) + f(n-2)（递推公式）
+#   边界：f(1)=1（只能走1级）、f(2)=2（1+1 或直接2）
+#   往下一项项推：f(3)=3, f(4)=5, f(5)=8, f(6)=13, f(7)=21, f(8)=34, f(9)=55, f(10)=89
+#   和斐波那契 F(1)=1,F(2)=1 的关系：爬楼梯序列 = 斐波那契右移一位（f(n) = F(n+1)）
+#   代码 = 递推公式直译：n=1/n=2 是递归出口，n>2 拆成两个小问题再相加
 # ------------------------------------------------------------
+# 【补充】拿小数字 n=5 走一遍缓存流程（小本本 = lru_cache）
+#   调用 climb(5)（Python 先算左支 climb(n-1)，再算右支 climb(n-2)）：
+#     ① climb(5) 没记录 → 真算，需要 climb(4)+climb(3)
+#     ② climb(4) 没记录 → 真算，需要 climb(3)+climb(2)
+#     ③ climb(3) 没记录 → 真算，需要 climb(2)+climb(1)
+#     ④ climb(2) 没记录 → 真算 = 2（边界），记下 climb(2)=2
+#     ⑤ climb(1) 没记录 → 真算 = 1（边界），记下 climb(1)=1
+#     ⑥ climb(3) = 2+1 = 3，记下 climb(3)=3
+#     ⑦ 回到 climb(4)：climb(2) 小本本有 → 直接抄 2 → 3+2=5，记下 climb(4)=5
+#     ⑧ 回到 climb(5)：climb(3) 小本本有 → 直接抄 3 → 5+3=8，记下 climb(5)=8
+#   最终小本本：{1:1, 2:2, 3:3, 4:5, 5:8}
+#   实测 climb.cache_info()：hits=2（抄了 climb(2)、climb(3)），misses=5（每个 n 真算一次）
+#   对比不用缓存：climb(5) 要真正执行函数体 9 次（climb(2) 算了 3 遍、climb(3) 算了 2 遍）
+#   n 越大差距越夸张：climb(30) 不缓存要算几百万次，缓存后每个 n 只算一次
 @functools.lru_cache(maxsize=None)
 def climb(n):
     if n == 1:
