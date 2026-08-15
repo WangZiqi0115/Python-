@@ -41,7 +41,7 @@
 | 17 | 8.12 | 迭代器协议（✅ 已完成） | iter/next、for 循环底层、StopIteration、自定义可迭代对象、常见迭代器 |
 | 18 | 8.13 | 闭包与作用域（✅ 已完成） | 嵌套函数、LEGB 查找顺序、nonlocal、闭包工厂、闭包陷阱 |
 | 19 | 8.14 | 装饰器入门（✅ 已完成） | 装饰器原理、@ 语法、functools.wraps、计时/日志装饰器 |
-| 20 | 8.15 | functools 与 keyword-only（⏳ 学习中） | reduce、partial、lru_cache、cmp_to_key、* 后面的必关键字参数 |
+| 20 | 8.15 | functools 与 keyword-only（✅ 已完成） | reduce、partial、lru_cache、cmp_to_key、* 后面的必关键字参数 |
 | 21 | 8.16 | 异常进阶 | raise、assert、自定义异常、异常链、else/finally 深入 |
 | 22 | 8.17 | 编码与 bytes | ASCII/Unicode/UTF-8/GBK、str vs bytes、encode/decode、乱码原理 |
 

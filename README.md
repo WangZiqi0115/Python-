@@ -54,7 +54,7 @@
 | Day 17 | 8.12 | 迭代器协议 | ✅ |
 | Day 18 | 8.13 | 闭包与作用域 | ✅ |
 | Day 19 | 8.14 | 装饰器入门 | ✅ |
-| Day 20 | 8.15 | functools 与 keyword-only | ⏳ 学习中 |
+| Day 20 | 8.15 | functools 与 keyword-only | ✅ |
 | Day 21~22 | 待续 | 异常、编码 | ⏳ |
 | Day 23~31 | 待续 | 标准库：JSON、CSV、时间、random、collections、itertools、正则进阶 | ⏳ |
 | Day 32~39 | 待续 | OOP 系统学习 + 两个综合项目 | ⏳ |
