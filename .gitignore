@@ -14,3 +14,6 @@ _test_*.txt
 test.txt
 text.txt
 name.txt
+
+# Windows 快捷方式
+*.lnk
