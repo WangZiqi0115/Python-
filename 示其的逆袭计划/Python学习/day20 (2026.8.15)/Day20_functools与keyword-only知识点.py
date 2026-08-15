@@ -97,6 +97,9 @@ print(total)            # 15
 #   第三次：a=6, b=4 → 10；第四次：a=10, b=5 → 15
 
 # 例子 2：连乘（算阶乘）
+# 【怎么读】reduce 括号里按顺序：第 1 个 = 合并函数（决定两两怎么合并）；
+#   第 2 个 = 要卷起来的序列；第 3 个（可选）= 初始值
+#   这一行：lambda a, b: a * b = 两两相乘；range(1, 6) = [1, 2, 3, 4, 5]
 fact = functools.reduce(lambda a, b: a * b, range(1, 6))
 print(fact)             # 120     # 1*2*3*4*5
 
