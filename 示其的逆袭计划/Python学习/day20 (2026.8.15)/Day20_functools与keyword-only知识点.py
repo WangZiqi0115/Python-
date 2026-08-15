@@ -10,14 +10,19 @@
 # ============================================================
 # 一、为什么需要 functools 和 keyword-only
 # ============================================================
-# functools = "函数工具"标准库模块，专门给函数"加能力"：
+# 【名字怎么来的？】functools = function（函数）+ tools（工具），直译"函数工具"
+# functools 是 Python 标准库模块，专门给函数"加能力"：
 #   - functools.wraps    保留函数身份证（昨天学过）
 #   - functools.reduce   把序列"卷"成一个值
 #   - functools.partial  提前固定一部分参数
 #   - functools.lru_cache 记住算过的结果（缓存）
 #   - functools.cmp_to_key 把旧式比较函数变成 sorted 的 key
 #
-# keyword-only（必关键字参数）则是 Python 函数定义里的一个语法：
+# 【名字怎么来的？】keyword-only 直译"仅限关键字"：
+#   keyword（关键字）这里指"关键字参数"的写法，即调用时写 名字=值
+#   （注意：不是 if/def/for 那种保留字 reserved keyword，别混了）
+#   only（仅仅）= 只允许这一种传法，禁止按位置传
+# keyword-only（必关键字参数）是 Python 函数定义里的一个语法：
 #   在参数列表里写一个单独的 *，它后面的参数"只能用关键字传"。
 #   比如 def f(a, b, *, c)：调用时 c 必须写成 c=xxx。
 #   作用：参数多了不容易搞混，代码一看就懂。
