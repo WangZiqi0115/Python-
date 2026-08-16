@@ -14,7 +14,10 @@ Day 21 · 异常进阶 练习 (2026.8.16)
 # ============================================================
 def safe_divide(a, b):
     # 请在此处编写代码
-    return None
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None
 
 
 # ============================================================
@@ -25,7 +28,14 @@ def safe_divide(a, b):
 # ============================================================
 def divide_with_else(a, b):
     # 请在此处编写代码
-    return None
+    try:
+        result = a / b
+    except ZeroDivisionError:
+        return None
+    else:
+        print("计算成功")
+        return result
+        
 
 
 # ============================================================
@@ -36,7 +46,11 @@ def divide_with_else(a, b):
 # ============================================================
 def read_int(text):
     # 请在此处编写代码
-    return None
+    try:
+        return int(text)
+    except (TypeError,ValueError):
+        return None
+    
 
 
 # ============================================================
@@ -47,7 +61,10 @@ def read_int(text):
 # ============================================================
 def validate_age(age):
     # 请在此处编写代码
-    return None
+    if age < 0 or age > 150:
+        raise ValueError("年龄不合法")
+    return "年龄有效"
+    
 
 
 # ============================================================
@@ -58,7 +75,9 @@ def validate_age(age):
 # ============================================================
 def check_score(score):
     # 请在此处编写代码
-    return None
+    if score < 0 or score > 100:
+        raise ValueError("分数不合法")
+    return "合格"
 
 
 # ============================================================
@@ -69,7 +88,8 @@ def check_score(score):
 # ============================================================
 def check_positive(x):
     # 请在此处编写代码
-    return None
+    assert x > 0, f"{x} 不是正数"     # 条件 False → AssertionError
+    return "是正数"
 
 
 # ============================================================
@@ -79,14 +99,17 @@ def check_positive(x):
 # 例：process(True) -> "OK"；process(False) 抛 MyError
 # 提示：class MyError(Exception) + raise MyError（带提示信息）
 # ============================================================
-class MyError:
+class MyError(Exception):
     # 请在此处编写代码（提示：继承 Exception）
     pass
 
 
 def process(ok):
     # 请在此处编写代码
-    return None
+    if ok:
+        return "OK"
+    else:
+        raise MyError()
 
 
 # ============================================================
@@ -98,12 +121,15 @@ def process(ok):
 # ============================================================
 def inner():
     # 请在此处编写代码
-    return None
+    raise ValueError("内部错误")
 
 
 def outer():
     # 请在此处编写代码
-    return None
+    try:
+        inner()
+    except ValueError as e:
+        raise RuntimeError("外部错误") from e
 
 
 # ============================================================
@@ -115,7 +141,13 @@ def outer():
 # ============================================================
 def safe_open(filename):
     # 请在此处编写代码
-    return None
+    try:
+        with open(filename,encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return None
+    finally:
+        print("已结束")
 
 
 # ============================================================
@@ -125,14 +157,17 @@ def safe_open(filename):
 # 例：parse("42") -> 42；parse("abc") 抛 NumberError
 # 提示：class NumberError(Exception) + try/except + raise
 # ============================================================
-class NumberError:
+class NumberError(Exception):
     # 请在此处编写代码（提示：继承 Exception）
     pass
 
 
 def parse(text):
     # 请在此处编写代码
-    return None
+    try:
+        return int(text)
+    except ValueError:
+        raise NumberError("转换失败") 
 
 
 # ============================================================

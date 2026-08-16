@@ -142,6 +142,20 @@ print(check_positive(5))       # 5 是正数
 # 大白话：Python 自带几十种异常（ValueError、TypeError...），
 #          但有时候不够用——想要"一看名字就知道错在哪"的异常。
 #          自己造一个异常类：继承 Exception 即可。
+# 【补充】class 是什么？（Day 32 才系统学，今天只要会用这个句式）
+#   class = 定义"类"的关键字，用来"制造一种新的类型"
+#   class ScoreError(Exception): 的意思是：
+#     ① 造一种叫 ScoreError 的新类型
+#     ② 括号里的 Exception = "认 Exception 当父类"（继承）
+#        继承 Exception 后，ScoreError 自动成为"异常家族"的一员：
+#        能被 raise 抛、能被 except 捕获
+#   类比：异常像"错误警报器"，Python 自带几种（ValueError/TypeError...）
+#         class 就是"定制警报器"的机器——给错误起个专属名字
+#   今天够用的句式（最简单版）：
+#     class 名字(Exception):
+#         pass
+#   下方 AgeError 里的 __init__ 和 self 是"附加数据"的进阶写法，
+#   看不懂可以先跳过，做题用简单版即可（Day 32 OOP 会系统讲）
 
 class ScoreError(Exception):
     """分数不合法时抛出"""
@@ -185,9 +199,23 @@ print(check_score(85))       # 分数有效：85
 #        你想让调用者看到的是"配置加载失败"（业务角度），
 #        但又不想丢掉"到底是哪个文件没找到"的原始信息。
 # 解法：捕获底层异常，抛一个新异常，并用 from 把原异常拴上。
+# 【补充】用一个比喻理解（快递取货失败）：
+#   程序要加载配置 → load_config 像"快递员"去仓库取货（open 文件）
+#   仓库不存在（文件不存在）→ 快递员遇到 FileNotFoundError（原始原因）
+#   快递员不直接甩给你"仓库编号 404"这种底层细节，
+#   他给的正式通知是"您的订单配送失败"（RuntimeError，业务语言）
+#   但通知上附了事故单："原因：XX仓库查无此货"（from e 保留原始原因）
+#   想深究时翻开通知就能看到底层原因，排查不丢线索
+#   一句话：新异常负责"说人话"，from 原异常负责"留证据"
+# ------------------------------------------------------------
 
 def load_config(filename):
     try:
+        # 【补充】open 的第二个参数是 mode（打开模式），不写默认是 'r'（只读）
+        #   open(file, mode='r', encoding=None, ...)
+        #   这行等价于 open(filename, 'r', encoding="utf-8")：只读 + UTF-8 编码
+        #   常用 mode：'r' 只读（默认）/ 'w' 写入覆盖 / 'a' 追加 / 'x' 新建 / 'b' 二进制（rb/wb）
+        #   默认 'r' 时文件不存在会抛 FileNotFoundError → 正好被下面的 except 接住
         with open(filename, encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError as e:
@@ -271,6 +299,14 @@ print(show([1, 2], "x"))      # 类型不对
 #       finally:
 #           return 2    # 结果返回 2！finally 的 return 赢了
 #   finally 是"收尾"用的，别在里面写 return
+#   【补充】finally 里不写 return 写什么？→ 写"收尾动作"（普通语句）：
+#     def f():
+#         try:
+#             return 1
+#         finally:
+#             print("收尾中...")   # ✅ 只做收尾：打印、关文件、清理资源
+#     f() 返回 1（finally 不影响返回值）
+#   口诀：finally 是"收拾东西走人"，不是"重新决定带什么走"
 
 
 # ============================================================
@@ -354,6 +390,15 @@ def load_data(path):
     try:
         with open(path, encoding="utf-8") as f:
             return f.read()
+    # 【补充】OSError 是什么？（Operating System Error，操作系统错误）
+    #   = 和"操作系统打交道"出错时的一类异常的"总爸爸"（父类）
+    #   open() 文件相关的错误几乎都是它家族：
+    #     FileNotFoundError（文件不存在）/ PermissionError（没权限）
+    #     IsADirectoryError（把目录当文件打开）/ FileExistsError（文件已存在）
+    #     ConnectionError（网络连接问题）...
+    #   这里写 except OSError 比 except Exception 好：
+    #     精确——只接文件/系统类错误，不会把代码里其他 bug（如 NameError）也吞掉
+    #   经验法则：能写多具体就写多具体（FileNotFoundError → OSError → Exception）
     except OSError as e:
         raise DataLoadError(f"无法加载数据：{path}") from e
 

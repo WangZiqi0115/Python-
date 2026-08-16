@@ -22,3 +22,8 @@
 #     return age
 
 print("Day 21 代码测试专用")
+def check_positive(x):
+    assert x > 0, f"{x} 不是正数"     # 条件 False → AssertionError
+    return f"{x} 是正数"
+
+print(check_positive(5)) 
