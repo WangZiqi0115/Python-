@@ -21,9 +21,26 @@
 #         raise ValueError("年龄不能为负")
 #     return age
 
-print("Day 21 代码测试专用")
-def check_positive(x):
-    assert x > 0, f"{x} 不是正数"     # 条件 False → AssertionError
-    return f"{x} 是正数"
+# print("Day 21 代码测试专用")
+# def check_positive(x):
+#     assert x > 0, f"{x} 不是正数"     # 条件 False → AssertionError
+#     return f"{x} 是正数"
 
-print(check_positive(5)) 
+# print(check_positive(5))13+6+4
+# """6,2,3,4,5,5
+# 624 355
+# 624
+# 6 24
+# 24
+# 2"""
+# dct1 = {"a": 1,"b":1}
+# dct2 = {"b": 1,"a":1}
+# print
+s = "   fly me   to   the moon  "
+
+print(len(s.strip().split()[-1]))
+
+
+
+    
+        
