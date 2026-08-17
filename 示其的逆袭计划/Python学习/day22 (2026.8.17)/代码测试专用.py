@@ -14,3 +14,5 @@
 # print(b"abc"[0])      # 97
 
 print("Day 22 代码测试专用")
+s = "111"
+print (s.encode())
