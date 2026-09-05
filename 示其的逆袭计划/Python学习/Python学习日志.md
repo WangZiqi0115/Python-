@@ -39,6 +39,7 @@ Python学习/
 ├── day20 (2026.8.15)/  # Day 20：functools 与 keyword-only
 ├── day21 (2026.8.16)/  # Day 21：异常进阶
 ├── day22 (2026.8.17)/  # Day 22：编码与 bytes
+├── day23 (2026.9.5)/  # Day 23：NumPy 数组基础(MNIST 重排起点)
 ├── python_base对比.md  # 与经典 Python 速查的差距分析
 ├── Python学习计划.md   # 50 天详细计划
 ├── Python常见报错速查.md
@@ -71,7 +72,7 @@ Python学习/
 | Day 20 | 2026.8.15 | functools 与 keyword-only | ✅ 已完成 |
 | Day 21 | 2026.8.16 | 异常进阶 | ✅ 已完成 |
 | Day 22 | 2026.8.17 | 编码与 bytes | ✅ 已完成 |
-| Day 23 | 2026.9.5 | NumPy 数组基础（MNIST 项目重排起点） | 🔥 今日开始 |
+| Day 23 | 2026.9.5 | NumPy 数组基础（MNIST 项目重排起点） | ✅ 已完成 |
 | Day 24+ | 2026.9 起 | 见 [AI数字识别小项目.md](../AI数字识别小项目.md)，全部围绕 MNIST 重排 | ⏳ 待学习 |
 
 ## 每日问题记录
@@ -103,6 +104,7 @@ Python学习/
 | 8.15   | reduce 括号里三个参数顺序、合并函数必须接收两个参数、partial 固定参数要不要记参数名（pow 的 exp）、@ 装饰器带参数版、cmp_to_key "转成 sorted 能用的 key"、比较函数返回值正负约定、爬楼梯递推数学思路；第 9/10 题误以为要自己写 sorted 调用 | ①②③ 参数顺序标注法（已写进每日必读第 8 条）；help(pow)/help(int) 查参数名；返回值 = a-b 的符号（负数 a 在前）；只需写比较函数体，列表和 sorted 调用在测试代码里；Day20 练习 100/100                                                                                                                                                                      |
 | 8.16   | class 是什么（自定义异常里的 class 没学过）、open 第二个参数 mode 默认值、异常链"为什么包一层+保留原因"、finally 里能不能写 return、OSError 是什么                                                                                         | class = 制造新类型，括号里 Exception 是继承（Day 32 系统学，今天只需 class 名字(Exception): pass 句式）；mode 默认 'r'（只读），文件不存在抛 FileNotFoundError；异常链 = 快递取货比喻（新异常说人话、from 留证据）；finally 只做收尾别写 return；OSError = 操作系统错误家族（FileNotFoundError/PermissionError...），能写多具体就多具体；Day21 练习 100/100 |
 | 8.17   | 第 3 题多余 str(s) 转换、第 6 题 encode/decode 用反（bytes 没有 encode）、第 7 题函数体空导致 IndentationError、第 9 题 <=128 应为 <128（ASCII 范围 0~127）、all() 用法忘了                                                                                                   | str 参数直接 len(s)，别硬转；str.encode 打包、bytes.decode 拆包；函数体不能空（先 return None 占位）；边界差 1 用 < 128；all(①可迭代对象) 全真才 True，配合推导式逐个检查；Day22 练习 100/100                                                                                                                                                            |
+| 9.5    | numpy 是干嘛用的、int64/uint8、切片"为什么是左上角 2x2"、max 的 key 怎么运行、生成器表达式作非唯一参数要加括号、`/` 与 `//` 区别、语法标红=括号没配平 | NumPy=数值计算库、数组是 AI 地基、图片=数组；int64=整数+64位、图像默认 uint8；切片左闭右开(含头不含尾)；max(可迭代,key=函数)用 key 当评分但返回元素本身；函数((生成器), key=...) 非唯一参数要带括号；`/` 带小数、`//` 整除；数括号成对、缺了补 |
 
 ## Git 提交记录
 
@@ -140,3 +142,4 @@ Python学习/
 | 8/17   | Day22 编码与 bytes 完成：练习 100/100，更新 README、学习日志与计划 |
 | 8/4    | 新增 Day9 模块与内置函数学习内容                                  |
 | 8/25   | 学习日志补充交接说明：注明 8.18-8.24 因开学选拔考试暂停；Claude 接管跟进，替代 Codex；每日必读重命名为 Codex_Claude |
+| 9/5    | 新增 Day23 NumPy 数组基础：知识点+练习+代码测试专用；更新 README、学习日志与 AI 项目计划 |
