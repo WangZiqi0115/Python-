@@ -13,6 +13,9 @@
 # # 示例：bytes 索引
 # print(b"abc"[0])      # 97
 
-print("Day 22 代码测试专用")
-s = "111"
-print (s.encode())
+# print("Day 22 代码测试专用")
+a = 1
+b = 2 
+a = b
+b = 3
+print(a,b)
