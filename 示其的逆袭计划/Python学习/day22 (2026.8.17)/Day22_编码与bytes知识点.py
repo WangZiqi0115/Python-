@@ -143,6 +143,15 @@ print(list(b"abc"))      # [97, 98, 99]
 # 一对"逆操作"：
 #   str.encode(编码) → bytes    文字 → 字节（打包发货）
 #   bytes.decode(编码) → str    字节 → 文字（拆包收货）
+# 【示其提问 2026.9.6：怎么记住 encode / decode？】
+#   ① 看方法长在谁身上：谁调用就"变成"另一方
+#        "你好".encode() → str 调 encode → 出 bytes
+#        b"...".decode() → bytes 调 decode → 回 str
+#   ② 快递类比：encode=打包发货(字装进箱子→能寄走/写文件/传网络)；
+#               decode=拆包收货(拆箱→还原成字,能给人看)
+#   ③ 词根：en-编进成代码=变字节; de-拆还原=变回文字
+#   ④ 口诀：encode 把"字"打包成"字节"送出去; decode 把"字节"拆包成"字"读回来。
+#   ⑤ 打包用哪套编码,拆包就得用哪套(utf-8 对 utf-8);换一套就乱码→练习8第4题考点。
 #
 # 参数顺序标注：str.encode(①编码, ②错误处理) / bytes.decode(①编码, ②错误处理)
 #   编码参数：'utf-8'（默认）/ 'gbk' / 'ascii' ...
